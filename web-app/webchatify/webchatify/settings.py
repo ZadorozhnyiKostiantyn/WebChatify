@@ -128,6 +128,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 SASS_PROCESSOR_ROOT = STATIC_URL
 
 # Default primary key field type

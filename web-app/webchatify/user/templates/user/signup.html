@@ -1,19 +1,16 @@
+{% extends 'user/layout.html' %}
+
+{% block csslink %}
 {% load sass_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="{% sass_src 'css/login.scss' %}" rel="stylesheet" type="text/css"/>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+<link href="{% sass_src 'user/css/login.scss' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block title%}Sign in{% endblock %}
+
+{% block main %}
 <form class="form" autocomplete="off">
     <div class="control">
         <h1>
-            Login
+            Create your account
         </h1>
     </div>
     <div class="control block-cube block-input">
@@ -40,6 +37,18 @@
             <div class="bg-inner"></div>
         </div>
     </div>
+    <div class="control block-cube block-input">
+        <input name="password" type="password" placeholder="Repeat Password"/>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
     <button class="btn block-cube block-cube-hover" type="button">
         <div class="bg-top">
             <div class="bg-inner"></div>
@@ -52,9 +61,10 @@
         </div>
 
         <div class="text">
-            Log In
+            Sign up
         </div>
     </button>
+
+    <br>
 </form>
-</body>
-</html>
+{% endblock %}

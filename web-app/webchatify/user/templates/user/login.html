@@ -1,0 +1,74 @@
+{% extends 'user/layout.html' %}
+
+{% block csslink %}
+    {% load sass_tags %}
+    <link href="{% sass_src 'user/css/login.scss' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block title%}Login{% endblock %}
+
+{% block main %}
+<form class="form" autocomplete="off">
+    <div class="control">
+        <h1>
+            Log in
+        </h1>
+    </div>
+    <div class="control block-cube block-input">
+        <input name="username" type="text" placeholder="Username"/>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <div class="control block-cube block-input">
+        <input name="password" type="password" placeholder="Password"/>
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+    </div>
+    <button class="btn block-cube block-cube-hover" type="button">
+        <div class="bg-top">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg-right">
+            <div class="bg-inner"></div>
+        </div>
+        <div class="bg">
+            <div class="bg-inner"></div>
+        </div>
+
+        <div class="text">
+            Log In
+        </div>
+    </button>
+
+    <br>
+</form>
+<button type="button" class="btn1" onclick="openDialog()" id="toggle">
+    Open overlay
+</button>
+<!--<label for="toggle">Open Overlay</label>-->
+
+<dialog id="dialog">
+    <p>
+        It looks like you are not registered. Want to register?
+    </p>
+    <a class="btnoverlay" href="{% url 'signup'%}">Sign up</a>
+    <button type="button" class="btnoverlay" onclick="closeDialog()">
+        Close overlay
+    </button>
+</dialog>
+{% load static %}
+<script src="{% static 'user/js/main.js' %}" type="application/javascript"></script>
+{% endblock %}
