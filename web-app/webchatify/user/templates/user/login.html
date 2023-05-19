@@ -1,20 +1,21 @@
 {% extends 'user/layout.html' %}
 
 {% block csslink %}
-    {% load sass_tags %}
-    <link href="{% sass_src 'user/css/login.scss' %}" rel="stylesheet" type="text/css"/>
+{% load sass_tags %}
+<link href="{% sass_src 'user/css/login.scss' %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block title%}Login{% endblock %}
 
 {% block main %}
-<form class="form" autocomplete="off">
+<form class="form" method="POST" autocomplete="off" data-validate-username-url="{% url 'validate_username' %}">
+    {% csrf_token %}
     <div class="control">
         <h1>
             Log in
         </h1>
     </div>
     <div class="control block-cube block-input">
-        <input name="username" type="text" placeholder="Username"/>
+        <input id="username" name="username" type="text" placeholder="Username"/>
         <div class="bg-top">
             <div class="bg-inner"></div>
         </div>
@@ -37,7 +38,7 @@
             <div class="bg-inner"></div>
         </div>
     </div>
-    <button class="btn block-cube block-cube-hover" type="button">
+    <button class="btn block-cube block-cube-hover" type="submit">
         <div class="bg-top">
             <div class="bg-inner"></div>
         </div>
@@ -52,23 +53,31 @@
             Log In
         </div>
     </button>
-
-    <br>
+    <div class="block-cube">
+        <a href="{% url 'register'%}">Want to register? Sign up</a>
+    </div>
 </form>
-<button type="button" class="btn1" onclick="openDialog()" id="toggle">
-    Open overlay
-</button>
+
+{% for message in messages %}
+<dialog id="register" open>
+    <p>{{message}}</p>
+    <button type="button" class="btnoverlay" onclick="closeDialogAboutRegistration()">Close</button>
+</dialog>
+{% endfor %}
+
+<!--<button type="button" class="btn1" onclick="openDialog()" id="toggle">-->
+<!--    Open overlay-->
+<!--</button>-->
 <!--<label for="toggle">Open Overlay</label>-->
 
 <dialog id="dialog">
     <p>
         It looks like you are not registered. Want to register?
     </p>
-    <a class="btnoverlay" href="{% url 'signup'%}">Sign up</a>
-    <button type="button" class="btnoverlay" onclick="closeDialog()">
-        Close overlay
-    </button>
+    <a class="btnoverlay" href="{% url 'register'%}">Sign up</a>
+    <button type="button" class="btnoverlay" onclick="closeDialog()">Close</button>
 </dialog>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 {% load static %}
 <script src="{% static 'user/js/main.js' %}" type="application/javascript"></script>
 {% endblock %}

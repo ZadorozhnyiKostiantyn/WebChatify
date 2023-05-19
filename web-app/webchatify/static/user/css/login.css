@@ -67,6 +67,14 @@ h1 {
     bottom: 0;
     background: #020024;
     background: linear-gradient(90deg, #020024 0%, #340979 37%, #00d4ff 94%); }
+  .block-cube a {
+    position: absolute;
+    left: 5px;
+    top: 15px;
+    right: 0;
+    bottom: 0;
+    text-decoration: none;
+    color: #fff; }
   .block-cube .bg-right {
     position: absolute;
     background: #020024;
@@ -150,6 +158,7 @@ dialog a {
     transform: translateY(-10px); } }
 
 dialog {
+  top: 30px;
   background: #212121;
   border-color: #fff;
   color: #fff;

@@ -7,14 +7,16 @@
 {% block title%}Sign in{% endblock %}
 
 {% block main %}
-<form class="form" autocomplete="off">
+<form class="form" method="POST">
+    {% csrf_token %}
     <div class="control">
         <h1>
             Create your account
         </h1>
     </div>
     <div class="control block-cube block-input">
-        <input name="username" type="text" placeholder="Username"/>
+        {{ form.username }}
+        <!--        <input name="username" type="text" placeholder="Username"/>-->
         <div class="bg-top">
             <div class="bg-inner"></div>
         </div>
@@ -26,7 +28,8 @@
         </div>
     </div>
     <div class="control block-cube block-input">
-        <input name="password" type="password" placeholder="Password"/>
+        {{ form.password1 }}
+        <!--        <input name="password" type="password" placeholder="Password"/>-->
         <div class="bg-top">
             <div class="bg-inner"></div>
         </div>
@@ -38,7 +41,8 @@
         </div>
     </div>
     <div class="control block-cube block-input">
-        <input name="password" type="password" placeholder="Repeat Password"/>
+        {{ form.password2 }}
+        <!--        <input name="password" type="password" placeholder="Repeat Password"/>-->
         <div class="bg-top">
             <div class="bg-inner"></div>
         </div>
@@ -49,7 +53,7 @@
             <div class="bg-inner"></div>
         </div>
     </div>
-    <button class="btn block-cube block-cube-hover" type="button">
+    <button class="btn block-cube block-cube-hover" type="submit">
         <div class="bg-top">
             <div class="bg-inner"></div>
         </div>
@@ -65,6 +69,28 @@
         </div>
     </button>
 
-    <br>
+    <div class="block-cube">
+        <a href="{% url 'login'%}">Already have an account? Login</a>
+    </div>
 </form>
+
+{% if form.errors %}
+{{ form.non_field_errors }}
+<dialog id="register" open>
+    {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <p>{{ error|escape }}</p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+    <button type="button" class="btnoverlay" onclick="closeDialogAboutRegistration()">Close</button>
+</dialog>
+{% endif %}
+
+{% load static %}
+
+<script src="{% static 'user/js/main.js' %}" type="application/javascript"></script>
 {% endblock %}

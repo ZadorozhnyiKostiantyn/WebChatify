@@ -8,4 +8,5 @@ urlpatterns = [
 
     # user related path
     path('', include('user.urls')),
+    # path('chat/', include('chat.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
