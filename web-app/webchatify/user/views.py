@@ -13,6 +13,9 @@ from django.contrib.auth import (
 from django.contrib.auth.decorators import login_required
 
 
+def index(request):
+    return redirect(to='login')
+
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -62,6 +65,7 @@ def register(request):
         context=context
     )
 
+
 # @csrf_exempt
 def validate_username(request):
     username = request.GET.get('username', None)
@@ -69,7 +73,6 @@ def validate_username(request):
         'is_taken': User.objects.filter(username=username).exists()
     }
     return JsonResponse(data)
-
 
 
 @login_required(login_url='login')

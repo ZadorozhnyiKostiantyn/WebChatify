@@ -1,0 +1,1089 @@
+$color_4: #999;
+$color_5: #444;
+$color_6: #419fd9;
+$color_7: #BBB; // color options and nav
+$color_13: #777;
+$bg_button: #555;
+$button_color: #888;
+$text_color: #fff;
+$background: #FFF;
+$background-color: #212121;
+$bg_chat: #c9bfd3;
+$hover: #2c2c2c;
+$border-color_1: #419fd9;
+$bg_gradient_last_color: $background-color;
+$bg_message_send: #cebaf1;
+$message_atribute_color: #2a2a2a;
+$bg_message_received: #2c2c2c;
+
+/* FIRST, THE OVERLAY ELEMENTS */
+/* small conversation menu */
+/* switch to mobile version screen */
+/* side menu */
+/* configuration screen */
+/* dark overlay element */
+/* ----------------- */
+/* MAIN APP ELEMENTS */
+/* ----------------- */
+/* THE CONVERSATION HISTORY CSS */
+/* THE REPLY BAR CSS */
+/* hidden, while not complete */
+/* CSS FOR THE EMOJI IMAGES, JUST SOME */
+/* NIGHT MODE THEMING */
+/* SOLVING RESPONSIVE DESIGN ISSUES */
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  overflow: hidden;
+  background: $background-color;
+//url(https://s-media-cache-ak0.pinimg.com/originals/51/ed/c0/51edc046eb80046ee4755ee71d0f19ca.jpg);
+  font-family: monospace, serif;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input[type="search"] {
+  border: none;
+  outline: none;
+}
+
+input[type="text"] {
+  border: none;
+  outline: none;
+}
+
+input[type="checkbox"] {
+  margin: 7px;
+  margin-right: 15px;
+}
+
+.alerts {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 9999;
+  padding: 10px;
+  color: $color_7;
+  border-radius: 4px;
+  background: $background-color;
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.4);
+  display: none;
+}
+
+.moreMenu {
+  position: absolute;
+  top: 70px;
+  right: 0px;
+  z-index: 10;
+  padding: 10px;
+  color: $text_color;
+  background: $background-color;
+  display: none;
+  border-top: 1px solid #DDD;
+  border-radius: 10px;
+
+  .option {
+    width: 150px;
+    height: 50px;
+    display: block;
+    background: $background-color;
+    color: $color_7;
+    font-size: 14px;
+    text-align: left;
+    border-radius: 10px;
+    padding-left: 10px;
+
+    &:hover {
+      background: $hover;
+    }
+
+    &:nth-last-child(1) {
+      margin-top: 3px;
+    }
+  }
+}
+
+.switchMobile {
+  position: absolute;
+  width: 65%;
+  height: auto;
+  padding: 10px;
+  background: #000000;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  border-radius: 15px;
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.1);
+  display: none;
+
+  .title {
+    color: $text_color;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .desc {
+    color: $text_color;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 25px;
+  }
+
+  .okay {
+    float: right;
+    width: 80px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #419fd9;
+    color: $text_color;
+    border-radius: 4px;
+    padding: 10px;
+  }
+}
+
+.menuWrap {
+  position: absolute;
+  width: 30%;
+  min-width: 240px;
+  max-width: 320px;
+  height: 100%;
+  z-index: 3;
+  display: none;
+}
+
+.menu {
+  position: relative;
+  left: -320px;
+  width: 100%;
+  height: 100vh;
+  float: left;
+  background: $background-color;
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.4);
+  opacity: 0;
+}
+
+.me {
+  position: relative;
+  width: calc(100% - 50px);
+  height: 140px;
+  background: $background-color;
+  padding: 15px 25px;
+  margin-bottom: 15px;
+
+  .image {
+    width: 70px;
+    height: 70px;
+    background: $hover no-repeat center;
+    background-size: cover;
+    border-radius: 100%;
+    cursor: pointer;
+  }
+
+  .settings {
+    position: absolute;
+    right: 20px;
+    bottom: 65px;
+    width: 40px;
+    height: 40px;
+    padding-top: 2px;
+    color: $background;
+    border-radius: 100%;
+    background: rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      //background: rgba(0, 0, 0, 0.35);
+      background: $hover;
+    }
+  }
+
+  .cloud {
+    position: absolute;
+    right: 20px;
+    bottom: 15px;
+    width: 40px;
+    height: 40px;
+    color: $background;
+    border-radius: 100%;
+    background: rgba(0, 0, 0, 0.09);
+
+    &:hover {
+      //background: rgba(0, 0, 0, 0.35);
+      background: $hover;
+    }
+  }
+
+  .myinfo {
+    position: absolute;
+    bottom: 15px;
+    font-size: 14px;
+    color: $background;
+  }
+}
+
+.myinfo {
+  .name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .phone {
+    font-weight: 300;
+  }
+}
+
+nav {
+  button {
+    width: 100%;
+    height: 45px;
+    background: $background-color;
+    text-align: left;
+    padding-left: 20px;
+    color: $color_7;
+
+    &:hover {
+      background: $hover;
+    }
+
+    > i {
+      color: $color_7;
+      float: left;
+    }
+
+    > span {
+      display: inline-block;
+      margin-top: 5px;
+      margin-left: 20px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+
+  float: left;
+  width: 100%;
+  height: auto;
+  max-height: 350px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.info {
+  position: absolute;
+  left: 20px;
+  bottom: 15px;
+  font-size: 12px;
+  color: $color_7;
+}
+
+.config {
+  border-radius: 20px;
+  position: absolute;
+  width: 50%;
+  height: 88vh;
+  left: 0px;
+  right: -200vw;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin: auto;
+  background: $background-color;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: block;
+  z-index: 520;
+  opacity: 0;
+}
+
+.confTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: $text_color;
+  margin: 10px 0px 15px 0px;
+}
+
+.configSect {
+  float: left;
+  width: calc(100% - 60px);
+  padding: 15px 30px;
+  margin-bottom: 10px;
+  background: $background-color;
+}
+
+.profile {
+  .image {
+    width: 140px;
+    height: 140px;
+    background: $hover no-repeat center;
+    background-size: cover;
+    border-radius: 100%;
+    float: left;
+    margin-right: 30px;
+  }
+
+  .changePic {
+    width: auto;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: monospace, serif;
+    background: $bg_message_send;
+    //color: $text_color;
+    border-radius: 4px;
+    padding: 10px;
+  }
+
+  .edit {
+    width: auto;
+    font-size: 16px;
+    font-weight: 600;
+    background: #419fd9;
+    color: $text_color;
+    border-radius: 4px;
+    padding: 10px;
+    margin-left: 10px;
+    background: $background-color;
+    color: $color_7;
+    font-family: monospace, serif;
+
+    &:hover {
+      color: $color_6;
+    }
+  }
+}
+
+.side {
+  width: auto;
+  height: 110px;
+  float: none;
+  position: relative;
+
+  .name {
+    color: $text_color;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .pStatus {
+    color: $color_6;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 300;
+  }
+}
+
+.second {
+  ul {
+    float: none;
+    margin-left: -7px;
+    list-style-type: none;
+
+    li {
+      margin: 7px;
+    }
+  }
+
+  .blue {
+    color: $color_6;
+  }
+
+  label {
+    display: block;
+    clear: both;
+  }
+
+  .information {
+    color: $text_color;
+    margin-bottom: 30px;
+  }
+}
+
+.check {
+  position: relative;
+  float: left;
+  display: block;
+  width: 38px;
+  height: 14px;
+  background: #BBB;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: all 0.2s ease-in-out;
+
+  > .tracer {
+    width: 16px;
+    height: 16px;
+    background: $background-color;
+    border: 2px solid #BBB;
+    border-radius: 100%;
+    float: left;
+    margin-top: -3px;
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+#checkNight {
+  display: none;
+}
+
+#deskNotif {
+  display: none;
+}
+
+#showSName {
+  display: none;
+}
+
+#showPreview {
+  display: none;
+}
+
+#playSounds {
+  display: none;
+}
+
+.toggleTracer {
+  &:checked {
+    ~ {
+      .check {
+        background: #419fd9;
+
+        > .tracer {
+          border-color: $border-color_1;
+          margin-left: 18px;
+        }
+      }
+    }
+  }
+}
+
+.optionWrapper {
+  display: block;
+  width: 100%;
+  height: 32px;
+
+  p {
+    float: left;
+    margin-top: 3px;
+    margin-left: 15px;
+    font-size: 14px;
+    color: $color_7;
+  }
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  display: none;
+}
+
+.leftPanel {
+  position: relative;
+  display: inline-block;
+  left: 0px;
+  width: 320px;
+  height: 100vh;
+  float: left;
+  background: $background-color;
+  border-right: 1px solid #DDD;
+}
+
+header {
+  width: 100%;
+  height: 70px;
+  background: $background-color;
+}
+
+.trigger {
+  float: left;
+  width: 32px;
+  height: 32px;
+  margin: 20px 15px;
+  margin-bottom: 0px;
+  color: $color_7;
+  cursor: pointer;
+  opacity: 0.6;
+  background: none;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  > svg {
+    width: 24px;
+    height: 24px;
+    fill: #888;
+  }
+}
+
+.searchChats {
+  width: calc(100% - 85px);
+  height: 40px;
+  font-family: monospace, serif;
+  //background: #EEE;
+  background: $hover;
+  float: left;
+  padding: 8px;
+  margin-top: 14px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+
+  &:focus {
+    color: $color_5;
+    border: 2px solid #419fd9;
+    background: rgb(243, 243, 243);
+  }
+}
+
+.chats {
+  width: 100%;
+  height: calc(100vh - 70px);
+  float: left;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.chatButton {
+  float: left;
+  width: 100%;
+  height: 80px;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:hover {
+    background: $hover;
+  }
+}
+
+.active {
+  color: $background;
+  background: $bg_gradient_last_color;
+
+  &:hover {
+    color: $background;
+    background: $hover;
+  }
+}
+
+.chatInfo {
+  float: left;
+
+  p {
+    float: left;
+  }
+
+  .image {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background: #DDD url(https://pbs.twimg.com/profile_images/378800000822867536/3f5a00acf72df93528b6bb7cd0a4fd0c.jpeg) no-repeat center;
+    background-size: cover;
+    border-radius: 100%;
+    margin: 13px 13px;
+  }
+
+  .my-image {
+    background-image: url(https://hips.hearstapps.com/hmg-prod/images/domestic-cat-lies-in-a-basket-with-a-knitted-royalty-free-image-1592337336.jpg?crop=0.668xw:1.00xh;0.247xw,0&resize=1200:*);
+  }
+
+  .name {
+    float: left;
+    font-weight: 600;
+    margin-left: 80px;
+    margin-top: 18px;
+  }
+
+  .message {
+    float: left;
+    clear: left;
+    margin-left: 80px;
+    margin-top: 7px;
+  }
+}
+
+.status {
+  width: 60px;
+  height: 100%;
+  position: relative;
+  float: right;
+
+  .fixed {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: none;
+  }
+
+  .count {
+    position: absolute;
+    right: 49px;
+    bottom: 7px;
+    width: auto;
+    height: auto;
+    padding: 7px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  .date {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    font-size: 12px;
+  }
+
+  .read {
+    position: absolute;
+    right: 53px;
+    top: 6px;
+  }
+}
+
+div[class~="normal"] {
+  > .fixed {
+    display: none;
+  }
+
+  > .count {
+    right: 10px;
+    bottom: 7px;
+  }
+}
+
+div[class~="onTop"] {
+  > .fixed {
+    display: block;
+    width: 24px;
+    height: 24px;
+    fill: $background-color;
+  }
+
+  > .count {
+    right: 49px;
+    bottom: 7px;
+    background: $hover;
+    color: $color_6;
+  }
+}
+
+.rightPanel {
+  float: left;
+  width: calc(100% - 321px);
+  height: 100vh;
+  background: #999;
+
+  .topBar {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    background: $background-color;
+  }
+}
+
+.leftSide {
+  display: inline-block;
+  clear: none;
+  float: left;
+
+  .chatName {
+    float: left;
+    margin-left: 30px;
+    margin-top: 13px;
+    color: $text_color;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  .chatStatus {
+    float: left;
+    clear: left;
+    margin-left: 30px;
+    margin-top: 5px;
+    color: $color_6;
+    font-weight: 300;
+    cursor: default;
+  }
+}
+
+.chatName {
+  > span {
+    font-size: 12px;
+    font-weight: 500;
+    color: $color_7;
+    margin-left: 10px;
+  }
+}
+
+.rightSide {
+  display: inline-block;
+  clear: none;
+  float: right;
+  margin-right: 20px;
+}
+
+.tbButton {
+  width: 50px;
+  height: 50px;
+  margin-top: 10px;
+  background: $background-color;
+  color: $button_color;
+  border-radius: 100%;
+
+  &:hover {
+    color: $bg_button;
+    background: $hover;
+  }
+}
+
+.otherTools {
+  .toolButtons {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    background: $background-color;
+    color: $button_color;
+    border-radius: 100%;
+
+    &:hover {
+      color: $bg_button;
+      background: $hover;
+    }
+  }
+}
+
+.convHistory {
+  float: left;
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 140px);
+  background: #333;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.userBg {
+  background: url("https://blog.1a23.com/wp-content/uploads/sites/2/2020/02/pattern-23.svg") 100% center;
+  background-color: $bg_chat;
+}
+
+.filter-color {
+  filter: invert(100%) sepia(0%) saturate(7480%) hue-rotate(184deg) brightness(98%) contrast(99%);
+}
+
+.msg {
+  position: relative;
+  width: auto;
+  min-width: 100px;
+  max-width: 45%;
+  height: auto;
+  padding: 25px;
+  padding-bottom: 35px;
+  margin: 20px 15px;
+  margin-bottom: 0px;
+  background: $bg_message_received;
+  border-radius: 7px;
+  clear: both;
+
+  &:nth-last-child(1) {
+    margin-bottom: 20px;
+  }
+
+  .timestamp {
+    display: block;
+    position: absolute;
+    right: 10px;
+    bottom: 6px;
+    color: $text_color;
+    user-select: none;
+  }
+}
+
+.messageReceived {
+  float: left;
+  background: $bg_message_received;
+  color: $text_color;
+}
+
+.messageSent {
+  float: right;
+  background: $bg_message_send;
+
+  > .timestamp {
+    bottom: 10px;
+    right: 40px;
+    color: $message_atribute_color;
+    user-select: none;
+  }
+
+  > .readStatus {
+    bottom: 10px;
+    right: 40px;
+    color: $message_atribute_color;
+    user-select: none;
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+  }
+}
+
+.replyBar {
+  width: 100%;
+  height: 70px;
+  float: left;
+  background: $background-color;
+
+  .attach {
+    width: 70px;
+    height: 70px;
+    color: $color_13;
+    background: $background-color;
+    float: left;
+
+    &:hover {
+      color: $bg_button;
+      background: $hover;
+    }
+  }
+
+  .d45 {
+    transform: rotate(45deg);
+    font-size: 32px;
+  }
+
+  .replyMessage {
+    width: calc(100% - 220px);
+    float: left;
+    height: 70px;
+    padding: 0px 8px;
+    font-size: 16px;
+    background-color: $background-color;
+    color: $text_color;
+    font-family: monospace, serif;
+  }
+
+  .otherTools {
+    float: right;
+    width: 120px;
+    height: 70px;
+  }
+}
+
+.emojiBar {
+  display: none;
+  position: absolute;
+  width: 332px;
+  height: 200px;
+  padding: 10px;
+  right: 30px;
+  bottom: 80px;
+  border: 2px solid #DDD;
+  border-radius: 3px;
+  background: $background-color;
+}
+
+.emoticonType {
+  width: 100%;
+  height: 50px;
+
+  button {
+    width: 105px;
+    height: 36px;
+    font-weight: 600;
+    color: $bg_button;
+    background: none;
+
+    &:hover {
+      color: $background;
+      background: $hover;
+    }
+  }
+}
+
+.emojiList {
+  width: 100%;
+  height: 150px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .pick {
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      background: $hover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 70%;
+    }
+  }
+}
+
+.stickerList {
+  width: 100%;
+  height: 150px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: none;
+
+  .pick {
+    width: 80px;
+    height: 80px;
+    background: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 65%;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      background: $hover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 65%;
+    }
+  }
+}
+
+//#smileface {
+//  content:  "\01F431";
+//}
+//
+//#grinningface {
+//  background-image: url(https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/96/grinning-face-with-smiling-eyes_1f601.png);
+//}
+//
+//#tearjoyface {
+//  background-image: url(https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/96/face-with-tears-of-joy_1f602.png);
+//}
+//
+//#rofl {
+//  background-image: url(https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/96/rolling-on-the-floor-laughing_1f923.png);
+//}
+//
+//#somface {
+//  background-image: url(https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/96/smiling-face-with-open-mouth_1f603.png);
+//}
+//
+//#swfface {
+//  background-image: url(https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/96/smiling-face-with-open-mouth-and-smiling-eyes_1f604.png);
+//}
+
+.DarkTheme {
+  background: #222;
+
+  .mainApp {
+    background: #222;
+  }
+}
+
+@media screen and (max-width: 1180px) {
+  .config {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .config {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 940px) {
+  body {
+    font-size: 14px;
+  }
+  .msg {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .leftPanel {
+    width: 80px;
+  }
+  .rightPanel {
+    width: calc(100% - 81px);
+  }
+  .msg {
+    width: auto;
+    max-width: 60%;
+  }
+  .profile {
+    .changePic {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .edit {
+      font-size: 14px;
+      font-weight: 500;
+      margin-left: 5px;
+    }
+  }
+  .searchChats {
+    display: none;
+  }
+  .chatButton {
+    > .name {
+      display: none;
+    }
+
+    > .message {
+      display: none;
+    }
+
+    > .status {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .switchMobile {
+    display: block;
+  }
+  .leftPanel {
+    display: none;
+  }
+  .rightPanel {
+    display: none;
+  }
+  .menuWrap {
+    display: none;
+  }
+  .config {
+    display: none;
+  }
+  .overlay {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .switchMobile {
+    width: calc(220px - 20px);
+  }
+}
