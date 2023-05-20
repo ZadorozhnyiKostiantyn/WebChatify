@@ -632,7 +632,7 @@ div[class~="onTop"] > .count {
 
 .messageSent {
   float: right;
-  background: #cebaf1; }
+  background: #58b3ff; }
   .messageSent > .timestamp {
     bottom: 10px;
     right: 40px;

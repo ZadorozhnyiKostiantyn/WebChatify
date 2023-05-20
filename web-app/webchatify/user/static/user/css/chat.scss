@@ -2,7 +2,7 @@ $color_4: #999;
 $color_5: #444;
 $color_6: #419fd9;
 $color_7: #BBB; // color options and nav
-$color_13: #777;
+$color_13: #777; // color option and nav
 $bg_button: #555;
 $button_color: #888;
 $text_color: #fff;
@@ -12,7 +12,8 @@ $bg_chat: #c9bfd3;
 $hover: #2c2c2c;
 $border-color_1: #419fd9;
 $bg_gradient_last_color: $background-color;
-$bg_message_send: #cebaf1;
+$bg_message_send: #58b3ff;
+$bt_setting: #cebaf1;
 $message_atribute_color: #2a2a2a;
 $bg_message_received: #2c2c2c;
 
@@ -341,7 +342,7 @@ nav {
     font-size: 16px;
     font-weight: 600;
     font-family: monospace, serif;
-    background: $bg_message_send;
+    background: $bt_setting;
     //color: $text_color;
     border-radius: 4px;
     padding: 10px;
