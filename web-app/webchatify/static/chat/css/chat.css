@@ -357,6 +357,97 @@ nav {
     border-color: #419fd9;
     margin-left: 18px; }
 
+.groupCreation {
+  border-radius: 20px;
+  position: absolute;
+  width: 360px;
+  height: auto;
+  left: 0px;
+  right: -200vw;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin: auto;
+  background: #212121;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: block;
+  z-index: 520;
+  opacity: 0; }
+  .groupCreation .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 0px 20px 0px; }
+  .groupCreation .group-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px; }
+  .groupCreation .upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ccc;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 40px;
+    height: 40px; }
+  .groupCreation img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 63.2px;
+    height: 63.2px; }
+  .groupCreation .upload-label i {
+    font-size: 24px;
+    color: #999; }
+  .groupCreation .upload-label:hover {
+    background-color: #f5f5f5; }
+  .groupCreation #group_photo {
+    width: 40px;
+    display: none; }
+  .groupCreation .group-name {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .groupCreation .group-name input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-family: monospace, serif;
+    letter-spacing: 0.05em;
+    font-size: 16px; }
+    .groupCreation .group-name input:hover, .groupCreation .group-name input:focus {
+      outline: none;
+      border: 0; }
+  .groupCreation .form-actions {
+    display: flex;
+    justify-content: end; }
+  .groupCreation .btn-create,
+  .groupCreation .btn-cancel {
+    font-family: monospace, sans-serif;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #999;
+    background-color: #212121; }
+  .groupCreation .btn-cancel:hover,
+  .groupCreation .btn-create:hover {
+    background-color: #2c2c2c; }
+  .groupCreation .btn-cancel {
+    margin-right: 5px; }
+
 .optionWrapper {
   display: block;
   width: 100%;
@@ -452,16 +543,13 @@ header {
   float: left; }
   .chatInfo p {
     float: left; }
-  .chatInfo .image {
+  .chatInfo .image img {
     position: absolute;
     width: 55px;
     height: 55px;
-    background: #DDD url(https://pbs.twimg.com/profile_images/378800000822867536/3f5a00acf72df93528b6bb7cd0a4fd0c.jpeg) no-repeat center;
     background-size: cover;
     border-radius: 100%;
     margin: 13px 13px; }
-  .chatInfo .my-image {
-    background-image: url(https://hips.hearstapps.com/hmg-prod/images/domestic-cat-lies-in-a-basket-with-a-knitted-royalty-free-image-1592337336.jpg?crop=0.668xw:1.00xh;0.247xw,0&resize=1200:*); }
   .chatInfo .name {
     float: left;
     font-weight: 600;
@@ -632,7 +720,7 @@ div[class~="onTop"] > .count {
 
 .messageSent {
   float: right;
-  background: #58b3ff; }
+  background: #4faefd; }
   .messageSent > .timestamp {
     bottom: 10px;
     right: 40px;
@@ -796,6 +884,8 @@ div[class~="onTop"] > .count {
   .menuWrap {
     display: none; }
   .config {
+    display: none; }
+  .groupCreation {
     display: none; }
   .overlay {
     display: none; } }

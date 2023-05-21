@@ -1,14 +1,14 @@
-from django.shortcuts import render, redirect
-from .forms import CreateUserForm
 from django.contrib import messages
-from django.http import JsonResponse
-from django.contrib.auth.models import User
-
 from django.contrib.auth import (
     authenticate,
     login,
     logout
 )
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+
+from .forms import CreateUserForm
 
 from django.contrib.auth.decorators import login_required
 
@@ -66,18 +66,9 @@ def register(request):
     )
 
 
-# @csrf_exempt
 def validate_username(request):
     username = request.GET.get('username', None)
     data = {
         'is_taken': User.objects.filter(username=username).exists()
     }
     return JsonResponse(data)
-
-
-@login_required(login_url='login')
-def chat(request):
-    return render(
-        request=request,
-        template_name='user/chat.html'
-    )

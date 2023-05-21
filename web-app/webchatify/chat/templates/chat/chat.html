@@ -2,8 +2,9 @@
 
 {% block csslink %}
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% load sass_tags %}
-<link href="{% sass_src 'user/css/chat.scss' %}" rel="stylesheet" type="text/css"/>
+<link href="{% sass_src 'chat/css/chat.scss' %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block title%}Chatify{% endblock %}
 
@@ -23,14 +24,17 @@
             <input class="searchChats" type="search" placeholder="Search..."/>
         </header>
         <div class="chats">
+
+            {% for chat_room in chat_rooms %}
             <div class="chatButton active">
                 <div class="chatInfo">
-                    <div class="image my-image">
-
+                    <div class="image">
+                        <img class="image" src="{{ chat_room.photo.url }}" alt="{{chat}}">
                     </div>
 
+
                     <p class="name">
-                        Username
+                        {{ chat_room.name }}
                     </p>
 
                     <p class="message">Message...</p>
@@ -42,6 +46,8 @@
                     <i class="material-icons read">done_all</i>
                 </div>
             </div>
+            {% endfor %}
+
         </div>
     </div>
 
@@ -266,21 +272,36 @@
             </label>
             <p>Play Sounds</p>
         </div>
-
-
-<!--        <p class="confTitle">Other Settings</p>-->
-
-<!--        <div class="optionWrapper">-->
-<!--            <input type="checkbox" id="checkNight" class="toggleTracer">-->
-
-<!--            <label class="check DarkThemeTrigger" for="checkNight">-->
-<!--                <div class="tracer"></div>-->
-<!--            </label>-->
-<!--            <p>Dark Theme</p>-->
-<!--        </div>-->
-
     </section>
 </section>
+
+<!-- NEW GROUP CREATION -->
+<section class="groupCreation">
+    <form enctype="multipart/form-data" action="{% url 'create_group' %}" method="POST" class="group-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="upload-group">
+                <label id="group_photo_lable" for="group_photo" class="upload-label">
+                    <i class="fa fa-camera"></i>
+                </label>
+                <img id="preview_image" src="#" alt="Selected Image" style="display: none; ">
+                {{ group.photo }}
+                <!--                <input type="file" name="group_photo" id="group_photo" accept="image/*">-->
+            </div>
+
+            <div class="group-name">
+                {{ group.name }}
+                <!--                <input type="text" name="group_name" placeholder="Group Name" required>-->
+            </div>
+        </div>
+        <div class="form-actions">
+
+            <button type="button" class="btn-cancel">Cancel</button>
+            <button type="submit" class="btn-create">Create Group</button>
+        </div>
+    </form>
+</section>
+
 
 <!-- DARK FRAME OVERLAY -->
 <section class="overlay"></section>
@@ -295,5 +316,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 {% load static %}
-<script src="{% static 'user/js/chat.js' %}" type="application/javascript"></script>
+<script src="{% static 'chat/js/chat.js' %}" type="application/javascript"></script>
 {% endblock %}
