@@ -1,19 +1,14 @@
-{% extends 'user/layout.html' %}
-
-
-
-{% block csslink %}
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-{% load sass_tags %}
-<link href="{% sass_src 'chat/css/chat.scss' %}" rel="stylesheet" type="text/css"/>
-{% endblock %}
-{% block title%}Chatify{% endblock %}
-
-{% block main %}
-<!-- -------- -->
-<!-- MAIN APP -->
-<!-- -------- -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load sass_tags %}
+    <link href="{% sass_src 'chat/css/chat.scss' %}" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <title>WebChatify</title>
+</head>
+<body>
 <section class="mainApp">
     <div class="leftPanel">
         <header>
@@ -26,110 +21,16 @@
             <input class="searchChats" type="search" placeholder="Search..."/>
         </header>
         <div class="chats">
+            {% block list_chat_rooms %}
 
-            {% for chat_room in chat_rooms %}
-            <div class="chatButton" data-id="{{ chat_room.id }}">
-                <div class="chatInfo">
-                    <div class="image">
-                        <img class="image" src="{{ chat_room.photo.url }}" alt="{{chat}}">
-                    </div>
-
-
-                    <p class="name">
-                        {{ chat_room.name }}
-                    </p>
-
-                    <p class="message">Message...</p>
-                </div>
-
-                <div class="status onTop">
-                    <p class="date">00:02</p>
-                    <p class="count">10</p>
-                    <i class="material-icons read">done_all</i>
-                </div>
-            </div>
-            {% endfor %}
-
+            {% endblock %}
         </div>
     </div>
 
     <div class="rightPanel">
-        <div class="topBar">
-            <div class="rightSide">
-                <button class="tbButton search">
-                    <i class="material-icons">&#xE8B6;</i>
-                </button>
-                <button class="tbButton otherOptions">
-                    <i class="material-icons">more_vert</i>
-                </button>
-            </div>
+        {% block room %}
 
-            <div class="leftSide">
-                <p class="chatName">Username <span>@username</span></p>
-                <p class="chatStatus">Online</p>
-            </div>
-        </div>
-
-        <div class="convHistory userBg">
-            <!-- CONVERSATION GOES HERE! -->
-
-            <div class="msg messageReceived">
-                Message...
-                <span class="timestamp">00:00</span>
-            </div>
-
-            <div class="msg messageSent">
-                Message...
-                <i class="material-icons readStatus">done_all</i>
-                <span class="timestamp">00:01</span>
-            </div>
-        </div>
-
-        <div class="replyBar">
-            <button class="attach">
-                <i class="material-icons d45">attach_file</i>
-            </button>
-
-            <input type="text" class="replyMessage" placeholder="Type your message..."/>
-
-            <div class="emojiBar">
-                <div class="emoticonType">
-                    <button id="panelEmoji">Emoji</button>
-                    <button id="panelStickers">Stickers</button>
-                    <button id="panelGIFs">GIFs</button>
-                </div>
-
-
-                <!-- Emoji panel -->
-                <div class="emojiList">
-                    <button id="smileface" class="pick">😀
-                    </button>
-                    <button id="grinningface" class="pick">😁</button>
-                    <button id="tearjoyface" class="pick">😂</button>
-                    <button id="rofl" class="pick">😃</button>
-                    <button id="somface" class="pick">😄</button>
-                    <button id="swfface" class="pick">😅</button>
-                </div>
-
-                <!-- the best part of telegram ever: STICKERS!! -->
-                <div class="stickerList">
-                    <button id="smileface" class="pick">
-                    </button>
-                    <button id="grinningface" class="pick"></button>
-                    <button id="tearjoyface" class="pick"></button>
-                </div>
-            </div>
-
-            <div class="otherTools">
-                <button class="toolButtons emoji">
-                    <i class="material-icons">face</i>
-                </button>
-
-                <button class="toolButtons audio">
-                    <i class="material-icons">mic</i>
-                </button>
-            </div>
-        </div>
+        {% endblock %}
     </div>
 </section>
 
@@ -315,8 +216,13 @@
     Trying to reconnect...
 </div>
 
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 {% load static %}
 <script src="{% static 'chat/js/chat.js' %}" type="application/javascript"></script>
+{% block script %}
+
 {% endblock %}
+</body>
+</html>

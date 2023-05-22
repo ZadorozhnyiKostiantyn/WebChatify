@@ -17,6 +17,10 @@ def index(request):
     return redirect(to='login')
 
 def login_page(request):
+
+    if request.user.is_authenticated:
+        return redirect('chat')
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')

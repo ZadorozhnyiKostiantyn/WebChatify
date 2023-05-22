@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import datetime
 
 def get_upload_chat_path(instance, filename):
     return f'{instance.owner.username}/group/{instance.name}/icon/{filename}'
@@ -42,12 +42,19 @@ class GroupMember(models.Model):
         on_delete=models.CASCADE
     )
 
-
+# MAKE LOG FILE IN THIS FIELD IN MEDIA FOLDER!
 class Message(models.Model):
-    from_user = models.CharField(max_length=100)
-    send_datetime = models.TimeField()
+    author = models.ForeignKey(
+        to=User,
+        related_name='author_message',
+        on_delete=models.CASCADE,
+    )
+    timestamp = models.DateTimeField(default=datetime.datetime.now)
     message = models.TextField()
     chat_room = models.ForeignKey(
         to=ChatRoom,
         on_delete=models.CASCADE
     )
+
+    def __str__(self):
+        return self.author.username

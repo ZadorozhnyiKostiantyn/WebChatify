@@ -1,13 +1,19 @@
-function hide(speed) {
+function hideMenu(speed) {
     $(".menuWrap").fadeOut(speed);
     $(".menu").animate({opacity: '0', left: '-320px'}, speed);
+}
+
+function closeAllOverlay(speed) {
+    $(".overlay, .menuWrap").fadeOut(speed);
+    $(".menu").animate({opacity: '0', left: '-320px'}, speed);
+    $(".config").animate({opacity: '0', right: '-200vw'}, speed);
 }
 
 $(document).ready(function () {
     const SPEED = 180;
     /* make side menu show up */
     $(".trigger").click(function () {
-        $(".overlay, .menuWrap").fadeIn(SPEED);
+        $(".overlay, .menuWrap").fadeIn(180);
         $(".menu").animate({opacity: '1', left: '0px'}, SPEED);
     });
 
@@ -15,7 +21,7 @@ $(document).ready(function () {
     $(".settings").click(function () {
         $(".config").animate({opacity: '1', right: '0px'}, SPEED);
         /* hide others */
-        hide(SPEED);
+        hideMenu(SPEED);
     });
 
     // Show/Hide the other notification options
@@ -25,52 +31,19 @@ $(document).ready(function () {
 
     /* close all overlay elements */
     $(".overlay").click(function () {
-        $(".overlay, .menuWrap").fadeOut(SPEED);
-        $(".menu").animate({opacity: '0', left: '-320px'}, SPEED);
-        $(".config").animate({opacity: '0', right: '-200vw'}, SPEED);
+        closeAllOverlay(SPEED);
     });
 
     //This also hide everything, but when people press ESC
     $(document).keydown(function (e) {
         if (e.keyCode == 27) {
-            $(".overlay, .menuWrap").fadeOut(SPEED);
-            $(".menu").animate({opacity: '0', left: '-320px'}, SPEED);
-            $(".config").animate({opacity: '0', right: '-200vw'}, SPEED);
-            $(".groupCreation").animate({opacity: '0', right: '-200vw'}, SPEED);
+            closeAllOverlay(SPEED);
         }
     });
 
-    /* make ng (new group) menu show up */
-    $(".ng").click(function () {
-        $(".groupCreation").animate({opacity: '1', right: '0px'}, SPEED);
-        /* hide others */
-        hide()
-    });
-
-    $("#group_photo").change(function () {
-        const file = this.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            document.getElementById("preview_image").src = e.target.result;
-            document.getElementById("preview_image").style.display = "block";
-            document.getElementById("group_photo_lable").style.display = "none";
-        };
-
-        reader.readAsDataURL(file);
-    });
-
-    $("#preview_image").click(function () {
-        document.getElementById("group_photo").click();
-    });
-
-
-    $(".btn-cancel").click(function () {
-        $(".groupCreation").animate({opacity: '0', right: '-200vw'}, SPEED);
-        $(".overlay, .menuWrap").fadeOut(SPEED);
-        $(".menu").animate({opacity: '0', left: '-320px'}, SPEED);
-        document.getElementById("preview_image").style.display = "none";
-        document.getElementById("group_photo_lable").style.display = "flex";
+    //Enable/Disable night mode
+    $(".DarkThemeTrigger").click(function () {
+        $("body").toggleClass("DarkTheme")
     });
 
     /* small conversation menu */
@@ -92,4 +65,76 @@ $(document).ready(function () {
     $(".convHistory, .replyMessage").click(function () {
         $(".emojiBar").fadeOut(120);
     });
+
+    /* make ng (new group) menu show up */
+    $(".ng").click(function () {
+        $(".groupCreation").animate({opacity: '1', right: '0px'}, SPEED);
+        /* hide others */
+        hideMenu(SPEED);
+    });
+
+    /* */
+    $("#group_photo").change(function () {
+        const file = this.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById("preview_image").src = e.target.result;
+            document.getElementById("preview_image").style.display = "block";
+            document.getElementById("group_photo_lable").style.display = "none";
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    /* set new  image*/
+    $("#preview_image").click(function () {
+        document.getElementById("group_photo").click();
+    });
+
+
+    $(".btn-cancel").click(function () {
+        $(".groupCreation").animate({opacity: '0', right: '-200vw'}, SPEED);
+        $(".overlay, .menuWrap").fadeOut(SPEED);
+        $(".menu").animate({opacity: '0', left: '-320px'}, SPEED);
+        document.getElementById("preview_image").style.display = "none";
+        document.getElementById("group_photo_lable").style.display = "flex";
+    });
+
+    $('.chatButton').click(function () {
+        var selectedChat = $(this);
+
+        selectedChat.addClass('active');
+        selectedChat.siblings().removeClass('active');
+
+        var roomName = $(this).data('name');
+        window.location.pathname = '/chat/' + roomName + '/';
+    });
+
+    // $('.chatButton').click(function () {
+    //     var selectedChat = $(this);
+    //     var chatId = selectedChat.data('id');
+    //
+    //     // Зробити AJAX-запит
+    //     $.ajax({
+    //         url: '/chat/ajax/get_chat_room_by_id/',
+    //         type: 'GET',
+    //         data: {
+    //             chatId: chatId
+    //         },
+    //         success: function (response) {
+    //
+    //             // var chatContent = response.chatContent; // Припустимо, що ви отримуєте вміст чату з поля chatContent у відповіді
+    //             // $('.chatContent').html(chatContent);
+    //             console.log(response)
+    //
+    //
+    //             selectedChat.addClass('active');
+    //             selectedChat.siblings().removeClass('active');
+    //         },
+    //         error: function () {
+    //
+    //         }
+    //     });
+    // });
 });

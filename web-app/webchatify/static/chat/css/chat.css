@@ -77,7 +77,7 @@ input[type="checkbox"] {
     border-radius: 10px;
     padding-left: 10px; }
     .moreMenu .option:hover {
-      background: #2c2c2c; }
+      background: #252525; }
     .moreMenu .option:nth-last-child(1) {
       margin-top: 3px; }
 
@@ -145,7 +145,7 @@ input[type="checkbox"] {
   .me .image {
     width: 70px;
     height: 70px;
-    background: #2c2c2c no-repeat center;
+    background: #252525 no-repeat center;
     background-size: cover;
     border-radius: 100%;
     cursor: pointer; }
@@ -160,7 +160,7 @@ input[type="checkbox"] {
     border-radius: 100%;
     background: rgba(0, 0, 0, 0.15); }
     .me .settings:hover {
-      background: #2c2c2c; }
+      background: #252525; }
   .me .cloud {
     position: absolute;
     right: 20px;
@@ -171,7 +171,7 @@ input[type="checkbox"] {
     border-radius: 100%;
     background: rgba(0, 0, 0, 0.09); }
     .me .cloud:hover {
-      background: #2c2c2c; }
+      background: #252525; }
   .me .myinfo {
     position: absolute;
     bottom: 15px;
@@ -201,7 +201,7 @@ nav {
     padding-left: 20px;
     color: #BBB; }
     nav button:hover {
-      background: #2c2c2c; }
+      background: #252525; }
     nav button > i {
       color: #BBB;
       float: left; }
@@ -253,7 +253,7 @@ nav {
 .profile .image {
   width: 140px;
   height: 140px;
-  background: #2c2c2c no-repeat center;
+  background: #252525 no-repeat center;
   background-size: cover;
   border-radius: 100%;
   float: left;
@@ -444,7 +444,7 @@ nav {
     background-color: #212121; }
   .groupCreation .btn-cancel:hover,
   .groupCreation .btn-create:hover {
-    background-color: #2c2c2c; }
+    background-color: #252525; }
   .groupCreation .btn-cancel {
     margin-right: 5px; }
 
@@ -503,7 +503,7 @@ header {
   width: calc(100% - 85px);
   height: 40px;
   font-family: monospace, serif;
-  background: #2c2c2c;
+  background: #252525;
   float: left;
   padding: 8px;
   margin-top: 14px;
@@ -512,9 +512,9 @@ header {
   font-size: 14px;
   font-weight: 600; }
   .searchChats:focus {
-    color: #444;
+    color: #fff;
     border: 2px solid #419fd9;
-    background: #f3f3f3; }
+    background: #3b3b3b; }
 
 .chats {
   width: 100%;
@@ -528,16 +528,17 @@ header {
   width: 100%;
   height: 80px;
   cursor: pointer;
-  overflow: hidden; }
+  overflow: hidden;
+  color: #fff;
+  background: #212121; }
   .chatButton:hover {
-    background: #2c2c2c; }
+    background: #252525; }
 
 .active {
-  color: #FFF;
-  background: #212121; }
+  color: #fff;
+  background: #3b3b3b; }
   .active:hover {
-    color: #FFF;
-    background: #2c2c2c; }
+    color: #fff; }
 
 .chatInfo {
   float: left; }
@@ -606,7 +607,7 @@ div[class~="onTop"] > .fixed {
 div[class~="onTop"] > .count {
   right: 49px;
   bottom: 7px;
-  background: #2c2c2c;
+  background: #252525;
   color: #419fd9; }
 
 .rightPanel {
@@ -661,7 +662,7 @@ div[class~="onTop"] > .count {
   border-radius: 100%; }
   .tbButton:hover {
     color: #555;
-    background: #2c2c2c; }
+    background: #252525; }
 
 .otherTools .toolButtons {
   width: 50px;
@@ -672,18 +673,29 @@ div[class~="onTop"] > .count {
   border-radius: 100%; }
   .otherTools .toolButtons:hover {
     color: #555;
-    background: #2c2c2c; }
+    background: #252525; }
+
+.selectChat {
+  width: 20%;
+  background: #6f94c6;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0 0 -50px; }
 
 .convHistory {
   float: left;
   position: relative;
-  width: 100%;
   height: calc(100vh - 140px);
   background: #333;
   overflow-x: hidden;
   overflow-y: auto; }
 
 .userBg {
+  width: 100%;
   background: url("https://blog.1a23.com/wp-content/uploads/sites/2/2020/02/pattern-23.svg") 100% center;
   background-color: #c9bfd3; }
 
@@ -748,7 +760,7 @@ div[class~="onTop"] > .count {
     float: left; }
     .replyBar .attach:hover {
       color: #555;
-      background: #2c2c2c; }
+      background: #252525; }
   .replyBar .d45 {
     transform: rotate(45deg);
     font-size: 32px; }
@@ -789,7 +801,7 @@ div[class~="onTop"] > .count {
     background: none; }
     .emoticonType button:hover {
       color: #FFF;
-      background: #2c2c2c; }
+      background: #252525; }
 
 .emojiList {
   width: 100%;
@@ -806,7 +818,7 @@ div[class~="onTop"] > .count {
     background-size: 70%;
     transition: all 0.15s ease-in-out; }
     .emojiList .pick:hover {
-      background: #2c2c2c;
+      background: #252525;
       background-repeat: no-repeat;
       background-position: center;
       background-size: 70%; }
@@ -826,7 +838,7 @@ div[class~="onTop"] > .count {
     background-size: 65%;
     transition: all 0.15s ease-in-out; }
     .stickerList .pick:hover {
-      background: #2c2c2c;
+      background: #252525;
       background-repeat: no-repeat;
       background-position: center;
       background-size: 65%; }

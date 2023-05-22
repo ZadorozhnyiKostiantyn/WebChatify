@@ -1,0 +1,163 @@
+{% extends 'chat/layout.html' %}
+
+{% block list_chat_rooms %}
+    {% for chat_room in chat_rooms %}
+        <div class="chatButton" data-name="{{ chat_room.name }}">
+            <div class="chatInfo">
+                <div class="image">
+                    <img class="image" src="{{ chat_room.photo.url }}" alt="{{chat}}">
+                </div>
+
+
+                <p class="name">
+                    {{ chat_room.name }}
+                </p>
+
+                <p class="message">Message...</p>
+            </div>
+
+            <div class="status onTop">
+                <p class="date">00:02</p>
+                <p class="count">10</p>
+                <i class="material-icons read">done_all</i>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block room %}
+<div class="topBar">
+    <div class="rightSide">
+        <button class="tbButton search">
+            <i class="material-icons">&#xE8B6;</i>
+        </button>
+        <button class="tbButton otherOptions">
+            <i class="material-icons">more_vert</i>
+        </button>
+    </div>
+
+    <div class="leftSide">
+        <p class="chatName">{{ room_name }}<span>@username</span></p>
+    </div>
+</div>
+
+<div class="convHistory userBg" id="chat-log">
+
+</div>
+
+<div class="replyBar">
+    <button class="attach">
+        <i class="material-icons d45">attach_file</i>
+    </button>
+
+    <input type="text" class="replyMessage" id="chat-message-input" placeholder="Type your message..."/>
+
+    <div class="emojiBar">
+        <div class="emoticonType">
+            <button id="panelEmoji">Emoji</button>
+            <button id="panelStickers">Stickers</button>
+            <button id="panelGIFs">GIFs</button>
+        </div>
+
+
+        <!-- Emoji panel -->
+        <div class="emojiList">
+            <button id="smileface" class="pick">😀
+            </button>
+            <button id="grinningface" class="pick">😁</button>
+            <button id="tearjoyface" class="pick">😂</button>
+            <button id="rofl" class="pick">😃</button>
+            <button id="somface" class="pick">😄</button>
+            <button id="swfface" class="pick">😅</button>
+        </div>
+
+        <!-- the best part of telegram ever: STICKERS!! -->
+        <div class="stickerList">
+            <button id="smileface" class="pick">
+            </button>
+            <button id="grinningface" class="pick"></button>
+            <button id="tearjoyface" class="pick"></button>
+        </div>
+    </div>
+
+    <div class="otherTools">
+        <button class="toolButtons emoji">
+            <i class="material-icons">face</i>
+        </button>
+
+<!--        <input id="chat-message-submit" type="button" value="Send">-->
+
+        <button id="chat-message-submit" class="toolButtons audio">
+            <i class="material-icons">mic</i>
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% load static %}
+<script src="{% static 'chat/js/reconnecting-websocket.js' %}"></script>
+<script>
+    var roomName = {{ room_name }};
+
+    var username = {{ username }}
+
+    const chatSocket = new ReconnectingWebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + roomName
+        + '/'
+    );
+
+    chatSocket.onmessage = function (e) {
+        var data = JSON.parse(e.data);
+        console.log(data);
+        var message = data['message'];
+        var author = message['author'];
+        // <div className="msg messageReceived">
+        //     {{message.message}}
+        //     <span className="timestamp">{{timestamp}}</span>
+        // </div>
+        var msgDivTag = document.createElement('div');
+        msgDivTag.className = 'msg';
+        var spanTag = document.createElement('span');
+        spanTag.className = 'timestamp';
+        spanTag.textContent = message.timestamp;
+        console.log(author);
+        console.log(username);
+        if(author === username) {
+            $(msgDivTag).addClass('messageSent');
+        }
+        else {
+            $(msgDivTag).addClass('messageReceived');
+        }
+        msgDivTag.textContent = message.message;
+        msgDivTag.appendChild(spanTag);
+        console.log(message);
+        document.querySelector('#chat-log').appendChild(msgDivTag);
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').onkeyup = function (e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'command': 'new_message',
+            'message': message,
+            'from': username,
+            'chat_room': roomName,
+        }));
+        messageInputDom.value = '';
+    };
+</script>
+{% endblock %}

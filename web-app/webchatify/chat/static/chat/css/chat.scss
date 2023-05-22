@@ -1,17 +1,17 @@
 $color_4: #999;
-$color_5: #444;
+
 $color_6: #419fd9;
 $color_7: #BBB; // color options and nav
 $color_13: #777; // color option and nav
+$active: #3b3b3b;
 $bg_button: #555;
 $button_color: #888;
 $text_color: #fff;
 $background: #FFF;
 $background-color: #212121;
 $bg_chat: #c9bfd3;
-$hover: #2c2c2c;
+$hover: #252525;
 $border-color_1: #419fd9;
-$bg_gradient_last_color: $background-color;
 $bg_message_send: #4faefd;
 $bt_setting: #cebaf1;
 $message_atribute_color: #2a2a2a;
@@ -676,9 +676,9 @@ header {
   font-weight: 600;
 
   &:focus {
-    color: $color_5;
+    color: $text_color;
     border: 2px solid #419fd9;
-    background: rgb(243, 243, 243);
+    background: $active;
   }
 }
 
@@ -696,6 +696,8 @@ header {
   height: 80px;
   cursor: pointer;
   overflow: hidden;
+  color: $text_color;
+  background: $background-color;
 
   &:hover {
     background: $hover;
@@ -703,12 +705,11 @@ header {
 }
 
 .active {
-  color: $background;
-  background: $bg_gradient_last_color;
+  color: $text_color;
+  background: $active;
 
   &:hover {
-    color: $background;
-    background: $hover;
+    color: $text_color;
   }
 }
 
@@ -893,17 +894,33 @@ div[class~="onTop"] {
   }
 }
 
+
+.selectChat {
+  width: 20%;
+  background: #6f94c6;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0 0 -50px;
+}
+
+
 .convHistory {
   float: left;
   position: relative;
-  width: 100%;
+  //width: 100%;
   height: calc(100vh - 140px);
   background: #333;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
+
 .userBg {
+  width: 100%;
   background: url("https://blog.1a23.com/wp-content/uploads/sites/2/2020/02/pattern-23.svg") 100% center;
   background-color: $bg_chat;
 }
