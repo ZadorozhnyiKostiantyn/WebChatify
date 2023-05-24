@@ -6,10 +6,8 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    # path('', views.chat, name='chat'),
-    path('', views.index, name='chat'),
+    path('', views.chat, name='chat'),
     path('create_group/', views.create_group, name='create_group'),
-    path("<str:room_name>/", views.room, name="room"),
-    re_path(r'^ajax/get_chat_room_by_id/$', views.get_chat_room_by_id, name='get_chat_room_by_id'),
+    path("<str:room_name>/<str:room_id>/", views.room, name="room"),
 ]
 

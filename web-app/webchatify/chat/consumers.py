@@ -1,17 +1,19 @@
+import datetime
 import json
+
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from .models import Message, ChatRoom
 from django.contrib.auth.models import User
-from .views import get_last_10_messages
-import datetime
-from django.utils.timezone import utc
+
+from .models import Message, ChatRoom
+from .views import get_all_messages
 
 
 class ChatConsumer(WebsocketConsumer):
     def fetch_messages(self, data):
-        messages = get_last_10_messages()
+        messages = get_all_messages(data['chatId'])
         content = {
+            'command': 'messages',
             'messages': self.messages_to_json(messages)
         }
         return self.send_message(content)
@@ -19,13 +21,11 @@ class ChatConsumer(WebsocketConsumer):
 
     def new_message(self, data):
         author = data['from']
-        print(author)
         author_user = User.objects.filter(username=author)[0]
-        print(author_user.username)
         message = Message.objects.create(
             author=author_user,
             message=data['message'],
-            chat_room=ChatRoom.objects.filter(name=data['chat_room'])[0]
+            chat_room=ChatRoom.objects.filter(id=data['chatId'])[0]
         )
         content = {
             'command': 'new_message',
@@ -41,8 +41,9 @@ class ChatConsumer(WebsocketConsumer):
         # return [self.message_to_json(message) for message in messages]
 
     def message_to_json(self, message):
-        time = datetime.datetime.strptime(str(message.timestamp), '%Y-%m-%d %H:%M:%S.%f').time()
+        time = datetime.datetime.strptime(str(message.timestamp)[:26], '%Y-%m-%d %H:%M:%S.%f').time()
         return {
+            'id': message.id,
             'author': message.author.username,
             'message': message.message,
             'timestamp': str(time)[:5]

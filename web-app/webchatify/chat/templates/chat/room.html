@@ -1,57 +1,99 @@
-<!-- chat/templates/chat/room.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-</head>
-<body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
-    {% load static %}
-    <script src="{% static 'chat/js/reconnecting-websocket.js' %}"></script>
-    <script>
-        var roomName = {{ room_name }};
-        var username = {{ username }};
+{% extends 'chat/layout.html' %}
 
-        const chatSocket = new ReconnectingWebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
+{% block list_chat_rooms %}
+{% for chat_room in chat_rooms %}
+<div class="chatButton" data-name="{{ chat_room.name }}" data-id="{{ chat_room.id }}">
+    <div class="chatInfo">
+        <div class="image">
+            <img class="image" src="{{ chat_room.photo.url }}" alt="{{chat}}">
+        </div>
 
-        chatSocket.onmessage = function(e) {
-            var data = JSON.parse(e.data);
-            var message = data['message'];
-            var author = message['author'];
-            console.log(message);
-            document.querySelector('#chat-log').value += (data.message + '\n');
-        };
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+        <p class="name">
+            {{ chat_room.name }}
+        </p>
 
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
+        <p class="message">Message...</p>
+    </div>
 
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'command': 'fetch_messages',
-            }));
-            messageInputDom.value = '';
-        };
-    </script>
-</body>
-</html>
+    <div class="status onTop">
+        <p class="date">00:02</p>
+        <p class="count">10</p>
+        <i class="material-icons read">done_all</i>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block room %}
+<div class="topBar">
+    <div class="rightSide">
+        <button class="tbButton search">
+            <i class="material-icons">&#xE8B6;</i>
+        </button>
+        <button class="tbButton otherOptions">
+            <i class="material-icons">more_vert</i>
+        </button>
+    </div>
+
+    <div class="leftSide">
+        <div class="image">
+            <img class="image" src="{{ room.photo.url }}" alt="{{chat}}">
+        </div>
+        <div class="chatName">
+            <p >{{ room.name }}</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="convHistory userBg" id="chat-log">
+
+</div>
+
+<div class="replyBar">
+    <button class="attach">
+        <i class="material-icons d45">attach_file</i>
+    </button>
+
+    <input type="text" class="replyMessage" id="chat-message-input" placeholder="Type your message..." required/>
+
+    <div class="emojiBar">
+        <div class="emoticonType">
+            <button id="panelEmoji">Emoji</button>
+        </div>
+
+        <!-- Emoji panel -->
+        <div class="emojiList">
+            <button id="smileface" class="pick">😀
+            </button>
+            <button id="grinningface" class="pick">😁</button>
+            <button id="tearjoyface" class="pick">😂</button>
+            <button id="rofl" class="pick">😃</button>
+            <button id="somface" class="pick">😄</button>
+            <button id="swfface" class="pick">😅</button>
+        </div>
+    </div>
+
+    <div class="otherTools">
+        <button class="toolButtons emoji">
+            <i class="material-icons">face</i>
+        </button>
+        <button id="chat-message-submit" class="toolButtons send">
+            <i class="material-symbols-outlined">send</i>
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% load static %}
+<script type="module" src="{% static 'chat/js/settings.js' %}"></script>
+<script type="module" src="{% static 'chat/js/websocket.js' %}"></script>
+<script type="text/javascript">
+    var roomName = "{{ room.name }}";
+    var room_id = "{{ room.id }}"
+    var username = "{{ username }}";
+</script>
+<script type="module" src="{% static 'chat/js/room.js' %}"></script>
+{% endblock %}

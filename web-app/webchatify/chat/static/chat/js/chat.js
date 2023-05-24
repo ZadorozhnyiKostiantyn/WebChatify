@@ -7,6 +7,7 @@ function closeAllOverlay(speed) {
     $(".overlay, .menuWrap").fadeOut(speed);
     $(".menu").animate({opacity: '0', left: '-320px'}, speed);
     $(".config").animate({opacity: '0', right: '-200vw'}, speed);
+    $(".groupCreation").animate({opacity: '0', right: '-200vw'}, speed);
 }
 
 $(document).ready(function () {
@@ -108,33 +109,8 @@ $(document).ready(function () {
         selectedChat.siblings().removeClass('active');
 
         var roomName = $(this).data('name');
-        window.location.pathname = '/chat/' + roomName + '/';
+        var roomId = $(this).data('id');
+        window.location.pathname = `/chat/${roomName}/${roomId}/`;
+        // '/chat/' + roomName + '/';
     });
-
-    // $('.chatButton').click(function () {
-    //     var selectedChat = $(this);
-    //     var chatId = selectedChat.data('id');
-    //
-    //     // Зробити AJAX-запит
-    //     $.ajax({
-    //         url: '/chat/ajax/get_chat_room_by_id/',
-    //         type: 'GET',
-    //         data: {
-    //             chatId: chatId
-    //         },
-    //         success: function (response) {
-    //
-    //             // var chatContent = response.chatContent; // Припустимо, що ви отримуєте вміст чату з поля chatContent у відповіді
-    //             // $('.chatContent').html(chatContent);
-    //             console.log(response)
-    //
-    //
-    //             selectedChat.addClass('active');
-    //             selectedChat.siblings().removeClass('active');
-    //         },
-    //         error: function () {
-    //
-    //         }
-    //     });
-    // });
 });

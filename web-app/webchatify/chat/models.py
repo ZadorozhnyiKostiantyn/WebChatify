@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 
+
 def get_upload_chat_path(instance, filename):
     return f'{instance.owner.username}/group/{instance.name}/icon/{filename}'
-
 
 
 def get_upload_profile_path(instance, filename):
@@ -42,7 +42,7 @@ class GroupMember(models.Model):
         on_delete=models.CASCADE
     )
 
-# MAKE LOG FILE IN THIS FIELD IN MEDIA FOLDER!
+
 class Message(models.Model):
     author = models.ForeignKey(
         to=User,
