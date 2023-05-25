@@ -10,6 +10,34 @@ function closeAllOverlay(speed) {
     $(".groupCreation").animate({opacity: '0', right: '-200vw'}, speed);
 }
 
+function cssMoreMenu() {
+    $(".moreMenu").css({
+        top: 50 + "px",
+        left: '',
+        right: 20 + "px"
+    });
+}
+
+function hideMoreMenu() {
+    cssMoreMenu()
+    $(".moreMenu").hide();
+}
+
+function toggleMoreMenu() {
+    if ($(".moreMenu").is(":hidden")) {
+        $(".moreMenu").slideToggle("fast");
+    } else {
+        hideMoreMenu()
+    }
+}
+
+function closeMoreMenu(e) {
+    if (!$(e.target).closest(".chatButton").length &&
+        !$(e.target).closest(".otherOptions").length) {
+        hideMoreMenu()
+    }
+}
+
 $(document).ready(function () {
     const SPEED = 180;
     /* make side menu show up */
@@ -49,7 +77,7 @@ $(document).ready(function () {
 
     /* small conversation menu */
     $(".otherOptions").click(function () {
-        $(".moreMenu").slideToggle("fast");
+        toggleMoreMenu()
     });
 
     /* clicking the search button from the conversation focus the search bar outside it, as on desktop */
@@ -102,6 +130,7 @@ $(document).ready(function () {
         document.getElementById("group_photo_lable").style.display = "flex";
     });
 
+
     $('.chatButton').click(function () {
         var selectedChat = $(this);
 
@@ -111,6 +140,28 @@ $(document).ready(function () {
         var roomName = $(this).data('name');
         var roomId = $(this).data('id');
         window.location.pathname = `/chat/${roomName}/${roomId}/`;
-        // '/chat/' + roomName + '/';
+    });
+
+
+    $(".chatButton").on("contextmenu", function (e) {
+        e.preventDefault(); // Відміна стандартного контекстного меню
+        var chatButton = $(this);
+        var offsetX = e.pageX - chatButton.offset().left;
+        var offsetY = e.pageY - 40;
+
+        $(".moreMenu").css({
+            top: offsetY + "px",
+            left: offsetX + "px",
+        });
+        toggleMoreMenu()
+    });
+
+    $(document).on({
+        "mousedown": function (e) {
+            closeMoreMenu(e)
+        },
+        "click": function (e) {
+            closeMoreMenu(e)
+        }
     });
 });

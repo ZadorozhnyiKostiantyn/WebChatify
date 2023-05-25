@@ -80,7 +80,7 @@
 
             <a href="{% url 'logout'%}">
                 <button class="lo">
-                    <i class="material-icons">&#xE879;</i>
+                    <i class="material-symbols-outlined">logout</i>
 
                     <span>Logout</span>
                 </button>
@@ -91,10 +91,24 @@
 </section>
 
 <!-- CONVERSATION OPTIONS MENU -->
+
 <div class="moreMenu">
-    <button class="option about">See Info</button>
-    <button class="option notify">Disable Notifications</button>
-    <button class="option block">Block User</button>
+    <button class="option about">
+        <span class="material-symbols-outlined">
+            info
+        </span>
+        See Info
+    </button>
+    <button class="option notify">
+        <span class="material-symbols-outlined">
+            link
+        </span>
+        Invite via link
+    </button>
+    <button class="option leaveGroup">
+        <span class="material-symbols-outlined">logout</span>
+        Leave group
+    </button>
 </div>
 
 <!-- MOBILE OVERLAY -->

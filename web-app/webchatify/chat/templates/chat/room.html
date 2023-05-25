@@ -2,7 +2,12 @@
 
 {% block list_chat_rooms %}
 {% for chat_room in chat_rooms %}
+{% if chat_room.id == room.id %}
+<div class="chatButton active" data-name="{{ chat_room.name }}" data-id="{{ chat_room.id }}">
+{% else %}
 <div class="chatButton" data-name="{{ chat_room.name }}" data-id="{{ chat_room.id }}">
+{% endif %}
+
     <div class="chatInfo">
         <div class="image">
             <img class="image" src="{{ chat_room.photo.url }}" alt="{{chat}}">

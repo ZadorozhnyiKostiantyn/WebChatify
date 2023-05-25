@@ -86,20 +86,23 @@ input[type="checkbox"] {
 
 .moreMenu {
   position: absolute;
-  top: 70px;
-  right: 0px;
+  width: 150px;
+  top: 50px;
+  right: 20px;
   z-index: 10;
   padding: 10px;
   color: $text_color;
   background: $background-color;
   display: none;
-  border-top: 1px solid #DDD;
+  border: 1px solid #2c2c2c;
   border-radius: 10px;
 
   .option {
     width: 150px;
     height: 50px;
     display: block;
+    display: flex;
+    align-items: center;
     background: $background-color;
     color: $color_7;
     font-size: 14px;
@@ -114,7 +117,14 @@ input[type="checkbox"] {
     &:nth-last-child(1) {
       margin-top: 3px;
     }
+
+    .material-symbols-outlined {
+      margin-right: 10px;
+    }
   }
+  .option.leaveGroup {
+      color: #8d0101;
+    }
 }
 
 .switchMobile {
@@ -834,7 +844,7 @@ div[class~="onTop"] {
       margin-left: 10px;
     }
 
-    .chatName p{
+    .chatName p {
       display: inline-block;
       font-size: 20px;
       margin-left: 40px;
@@ -947,15 +957,20 @@ div[class~="onTop"] {
   display: none;
 }
 
+.chatNotSelected {
+  float: left;
+  position: relative;
+  height: 100%;
+  background: #333;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
 .userBg {
   width: 100%;
   background: url("https://blog.1a23.com/wp-content/uploads/sites/2/2020/02/pattern-23.svg") 100% center;
   background-color: $bg_chat;
 }
-
-//.filter-color {
-//  filter: invert(100%) sepia(0%) saturate(7480%) hue-rotate(184deg) brightness(98%) contrast(99%);
-//}
 
 .scrollButton {
   display: none;
