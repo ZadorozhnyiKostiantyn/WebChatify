@@ -1,18 +1,20 @@
 {% extends 'chat/layout.html' %}
+
+
 {% block list_chat_rooms %}
     {% for chat_room in chat_rooms %}
         <div class="chatButton" data-name="{{ chat_room.name }}" data-id="{{ chat_room.id }}">
             <div class="chatInfo">
                 <div class="image">
-                    <img class="image" src="{{ chat_room.photo.url }}" alt="{{chat}}">
+                    <img src="{{ chat_room.photo.url }}" alt="">
                 </div>
+                <div class="textInfo">
+                    <p class="name">
+                        {{ chat_room.name }}
+                    </p>
 
-
-                <p class="name">
-                    {{ chat_room.name }}
-                </p>
-
-                <p class="message">Message...</p>
+                    <p class="message">Message...</p>
+                </div>
             </div>
 
             <div class="status onTop">
@@ -23,6 +25,7 @@
         </div>
     {% endfor %}
 {% endblock %}
+
 
 {% block room %}
     <div class="chatNotSelected userBg">

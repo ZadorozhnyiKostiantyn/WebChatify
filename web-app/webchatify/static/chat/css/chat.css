@@ -88,6 +88,48 @@ input[type="checkbox"] {
   .moreMenu .option.leaveGroup {
     color: #8d0101; }
 
+.inviteLink {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999; }
+
+.inviteLink {
+  display: none;
+  position: fixed;
+  width: 440px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #212121;
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999; }
+  .inviteLink .link {
+    display: flex;
+    align-items: center; }
+    .inviteLink .link p {
+      margin-right: 10px; }
+    .inviteLink .link input {
+      flex-grow: 1;
+      border: none;
+      color: #fff;
+      font-family: monospace, sans-serif;
+      background-color: #2c2c2c;
+      padding: 5px; }
+    .inviteLink .link button {
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer; }
+
 .switchMobile {
   position: absolute;
   width: 65%;
@@ -528,10 +570,15 @@ header {
   height: calc(100vh - 70px);
   float: left;
   overflow-x: hidden;
-  overflow-y: auto; }
+  overflow-y: scroll; }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.chats::-webkit-scrollbar {
+  display: none; }
 
 .chatButton {
-  float: left;
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 80px;
   cursor: pointer;
@@ -541,36 +588,28 @@ header {
   .chatButton:hover {
     background: #252525; }
 
-.active {
-  color: #fff;
+.chatButton.active {
   background: #3b3b3b; }
-  .active:hover {
-    color: #fff; }
 
 .chatInfo {
-  float: left; }
-  .chatInfo p {
-    float: left; }
+  display: flex;
+  align-items: center;
+  overflow: hidden; }
   .chatInfo .image img {
-    position: absolute;
     width: 55px;
     height: 55px;
     background-size: cover;
     border-radius: 100%;
     margin: 13px 13px; }
+  .chatInfo .textInfo {
+    margin-left: 0px; }
   .chatInfo .name {
-    float: left;
-    font-weight: 600;
-    margin-left: 80px;
-    margin-top: 18px; }
+    font-weight: 600; }
   .chatInfo .message {
-    float: left;
-    clear: left;
-    margin-left: 80px;
     margin-top: 7px; }
 
 .status {
-  width: 60px;
+  width: 50%;
   height: 100%;
   position: relative;
   float: right; }
@@ -708,9 +747,8 @@ div[class~="onTop"] > .count {
   border-radius: 10px;
   padding: 10px;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -50px 0 0 -50px; }
+  top: 45%;
+  left: 38%; }
 
 .convHistory {
   float: left;
@@ -764,8 +802,7 @@ div[class~="onTop"] > .count {
   padding-right: 30px;
   padding-top: 30px;
   padding-bottom: 25px;
-  margin: 20px 15px;
-  margin-bottom: 0px;
+  margin: 0px 15px;
   background: #2c2c2c;
   border-radius: 10px;
   clear: both; }
@@ -807,6 +844,29 @@ div[class~="onTop"] > .count {
     position: absolute;
     bottom: 10px;
     right: 12px; }
+
+.joinUser {
+  padding: 2px 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  justify-content: center;
+  height: 20px;
+  font-size: 14px;
+  min-width: 30px;
+  max-width: 100px;
+  color: #000000;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  background: #fff;
+  border-radius: 10px; }
+
+.wrapper {
+  clear: both; }
 
 .replyBar {
   width: 100%;

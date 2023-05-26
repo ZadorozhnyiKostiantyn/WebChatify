@@ -1,3 +1,5 @@
+
+
 function hideMenu(speed) {
     $(".menuWrap").fadeOut(speed);
     $(".menu").animate({opacity: '0', left: '-320px'}, speed);
@@ -8,6 +10,7 @@ function closeAllOverlay(speed) {
     $(".menu").animate({opacity: '0', left: '-320px'}, speed);
     $(".config").animate({opacity: '0', right: '-200vw'}, speed);
     $(".groupCreation").animate({opacity: '0', right: '-200vw'}, speed);
+    $('.inviteLink').fadeOut(speed)
 }
 
 function cssMoreMenu() {
@@ -23,6 +26,16 @@ function hideMoreMenu() {
     $(".moreMenu").hide();
 }
 
+
+function copyToClipboard(text) {
+    var textarea = $('<textarea></textarea>');
+    textarea.val(text);
+    $('body').append(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    textarea.remove();
+}
+
 function toggleMoreMenu() {
     if ($(".moreMenu").is(":hidden")) {
         $(".moreMenu").slideToggle("fast");
@@ -33,13 +46,16 @@ function toggleMoreMenu() {
 
 function closeMoreMenu(e) {
     if (!$(e.target).closest(".chatButton").length &&
-        !$(e.target).closest(".otherOptions").length) {
+        !$(e.target).closest(".otherOptions").length &&
+        !$(e.target).closest(".option").length) {
         hideMoreMenu()
     }
 }
 
 $(document).ready(function () {
     const SPEED = 180;
+    const HOST_URL = "http://127.0.0.1:8000";
+    var chatId = 0;
     /* make side menu show up */
     $(".trigger").click(function () {
         $(".overlay, .menuWrap").fadeIn(180);
@@ -77,6 +93,7 @@ $(document).ready(function () {
 
     /* small conversation menu */
     $(".otherOptions").click(function () {
+        chatId = room_id;
         toggleMoreMenu()
     });
 
@@ -143,11 +160,13 @@ $(document).ready(function () {
     });
 
 
+
     $(".chatButton").on("contextmenu", function (e) {
         e.preventDefault(); // Відміна стандартного контекстного меню
         var chatButton = $(this);
         var offsetX = e.pageX - chatButton.offset().left;
         var offsetY = e.pageY - 40;
+        chatId = $(this).data('id');
 
         $(".moreMenu").css({
             top: offsetY + "px",
@@ -155,6 +174,41 @@ $(document).ready(function () {
         });
         toggleMoreMenu()
     });
+
+    $(".option").click(function () {
+        console.log("click!");
+        if ($(this).hasClass("invite")) {
+
+            console.log(`click! chat id: ${chatId}`);
+            $.ajax({
+                url: '/chat/get_invite_link/',
+                method: 'GET',
+                data: {
+                    chatId: chatId
+                },
+                success: function (response) {
+                    var inviteLink = response.link;
+                    $('#inviteLinkInput').val(`${HOST_URL}/chat/invite/${inviteLink}`);
+                    $(".overlay, .menuWrap").fadeIn(SPEED);
+                    $('.inviteLink').fadeIn(SPEED) // Показуємо вікно з посиланням
+                },
+                error: function () {
+                    alert('Failed to get invite link. Please try again.');
+                }
+            });
+        } else {
+
+        }
+    });
+
+
+    $('.material-symbols-outlined, .copyLink').click(function () {
+        var inviteLink = $('#inviteLinkInput').val();
+        copyToClipboard(inviteLink); // Копіювати посилання в буфер обміну
+        alert('Invite link copied!');
+        closeAllOverlay()
+    });
+
 
     $(document).on({
         "mousedown": function (e) {
@@ -164,4 +218,7 @@ $(document).ready(function () {
             closeMoreMenu(e)
         }
     });
+
+
+
 });

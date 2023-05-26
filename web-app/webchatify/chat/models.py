@@ -26,14 +26,15 @@ class ChatRoom(models.Model):
         User,
         on_delete=models.CASCADE
     )
+    invite_link = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     photo = models.ImageField(null=True, upload_to=get_upload_chat_path)
 
 
 class GroupMember(models.Model):
-    joined_datetime = models.DateTimeField()
-    left_datetime = models.DateTimeField()
-    users = models.ForeignKey(
+    joined_datetime = models.DateTimeField(default=datetime.datetime.now)
+    left_datetime = models.DateTimeField(null=True, blank=True)
+    user = models.ForeignKey(
         to=User,
         on_delete=models.CASCADE
     )
