@@ -4,7 +4,7 @@ import datetime
 
 
 def get_upload_chat_path(instance, filename):
-    return f'{instance.owner.username}/group/{instance.name}/icon/{filename}'
+    return f'{instance.owner.username}/group/{instance.invite_link}/icon/{filename}'
 
 
 def get_upload_profile_path(instance, filename):

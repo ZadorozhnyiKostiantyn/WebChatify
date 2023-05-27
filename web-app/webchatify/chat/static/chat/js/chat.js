@@ -1,5 +1,3 @@
-
-
 function hideMenu(speed) {
     $(".menuWrap").fadeOut(speed);
     $(".menu").animate({opacity: '0', left: '-320px'}, speed);
@@ -156,9 +154,8 @@ $(document).ready(function () {
 
         var roomName = $(this).data('name');
         var roomId = $(this).data('id');
-        window.location.pathname = `/chat/${roomName}/${roomId}/`;
+        window.location.pathname = `/chat/${roomId}/`;
     });
-
 
 
     $(".chatButton").on("contextmenu", function (e) {
@@ -176,10 +173,7 @@ $(document).ready(function () {
     });
 
     $(".option").click(function () {
-        console.log("click!");
         if ($(this).hasClass("invite")) {
-
-            console.log(`click! chat id: ${chatId}`);
             $.ajax({
                 url: '/chat/get_invite_link/',
                 method: 'GET',
@@ -190,7 +184,7 @@ $(document).ready(function () {
                     var inviteLink = response.link;
                     $('#inviteLinkInput').val(`${HOST_URL}/chat/invite/${inviteLink}`);
                     $(".overlay, .menuWrap").fadeIn(SPEED);
-                    $('.inviteLink').fadeIn(SPEED) // Показуємо вікно з посиланням
+                    $('.inviteLink').fadeIn(SPEED); // Показуємо вікно з посиланням
                 },
                 error: function () {
                     alert('Failed to get invite link. Please try again.');
@@ -202,7 +196,7 @@ $(document).ready(function () {
     });
 
 
-    $('.material-symbols-outlined, .copyLink').click(function () {
+    $('.copyLink').click(function () {
         var inviteLink = $('#inviteLinkInput').val();
         copyToClipboard(inviteLink); // Копіювати посилання в буфер обміну
         alert('Invite link copied!');
@@ -218,7 +212,4 @@ $(document).ready(function () {
             closeMoreMenu(e)
         }
     });
-
-
-
 });

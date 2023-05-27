@@ -1,12 +1,12 @@
-from django.urls import path, re_path
+from django.urls import path
+
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.chat, name='chat'),
-    path('create_group/', views.create_group, name='create_group'),
-    path("<str:room_name>/<str:room_id>/", views.room, name="room"),
-    path("invite/<str:invite_link>", views.join_chat_room, name='invite'),
-    re_path(r'^get_invite_link/$', views.get_invite_link, name='get_invite_link'),
+    path('', views.ChatView.as_view(), name='chat'),
+    path('create_group/', views.CreateGroupView.as_view(), name='create_group'),
+    path("<int:room_id>/", views.RoomView.as_view(), name="room"),
+    path("invite/<str:invite_link>", views.JoinChatRoomView.as_view(), name='invite'),
+    path("get_invite_link/", views.GetInviteLinkView.as_view(), name='get_invite_link'),
 ]
+

@@ -1,78 +1,62 @@
 from django.contrib import messages
-from django.contrib.auth import (
-    authenticate,
-    login,
-    logout
-)
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import FormView
 
 from .forms import CreateUserForm
 
-from django.contrib.auth.decorators import login_required
+
+class IndexView(View):
+    def get(self, request):
+        return redirect(reverse_lazy('login'))
 
 
-def index(request):
-    return redirect(to='login')
+class LoginPageView(View):
+    template_name = 'user/login.html'
 
-def login_page(request):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('chat')
+        return render(request, self.template_name)
 
-    if request.user.is_authenticated:
-        return redirect('chat')
-
-    if request.method == 'POST':
+    def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(
-            request=request,
-            username=username,
-            password=password
-        )
+        user = authenticate(request=request, username=username, password=password)
 
         if user is not None:
-            login(
-                request=request,
-                user=user
-            )
+            login(request=request, user=user)
             return redirect('chat')
         else:
-            messages.info(
-                request=request,
-                message='Username or password is incorrect'
-            )
+            messages.info(request=request, message='Username or password is incorrect')
 
-    return render(
-        request=request,
-        template_name='user/login.html',
-    )
+        return render(request, self.template_name)
 
 
-def logout_user(request):
-    logout(request)
-    return redirect('login')
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('login')
 
 
-def register(request):
-    form = CreateUserForm()
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request=request, message='Account created successfully')
-            return redirect('login')
-    context = {'form': form}
-    return render(
-        request=request,
-        template_name='user/register.html',
-        context=context
-    )
+class RegisterView(FormView):
+    template_name = 'user/register.html'
+    form_class = CreateUserForm
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(request=self.request, message='Account created successfully')
+        return super().form_valid(form)
 
 
-def validate_username(request):
-    username = request.GET.get('username', None)
-    data = {
-        'is_taken': User.objects.filter(username=username).exists()
-    }
-    return JsonResponse(data)
+class ValidateUsernameView(View):
+    def get(self, request):
+        username = request.GET.get('username', None)
+        data = {'is_taken': User.objects.filter(username=username).exists()}
+        return JsonResponse(data)

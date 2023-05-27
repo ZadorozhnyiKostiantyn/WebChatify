@@ -9,31 +9,9 @@ from .models import Message, GroupMember, ChatRoom
 from django.db.models import Value, CharField, ExpressionWrapper, DateTimeField, F, TextField
 
 
-def get_chat_history(chatId):
-    members = GroupMember.objects.filter(chat_room__id=chatId)
-    messages = Message.objects.filter(chat_room__id=chatId)
-
-    members_history = members.annotate(
-        Auther=F('user__username'),
-        Message=F('user__username'),
-        TypeMessage=Value('join_user', output_field=CharField()),
-        Timestamp=ExpressionWrapper(F('joined_datetime'), output_field=DateTimeField())
-    ).values('Auther', 'Timestamp', 'Message', 'TypeMessage')
-
-    messages_history = messages.annotate(
-        Auther=F('author__username'),
-        Message=F('message'),
-        TypeMessage=Value('message', output_field=CharField()),
-        Timestamp=ExpressionWrapper(F('timestamp'), output_field=DateTimeField())
-    ).values('Auther', 'Timestamp', 'Message', 'TypeMessage')
-
-    chat_history = members_history.union(messages_history, all=True).order_by('-Timestamp')
-    return chat_history
-
-
 class ChatConsumer(WebsocketConsumer):
     def fetch_messages(self, data):
-        messages = get_chat_history(data['chatId'])
+        messages = self.get_chat_history(data['chatId'])
         content = {
             'command': 'messages',
             'messages': self.messages_to_json(messages)
@@ -59,7 +37,7 @@ class ChatConsumer(WebsocketConsumer):
         content = {
             'command': 'join_message',
             'message': {
-                'username': username,
+                'message': f'{username} has joined the group',
             }
         }
         self.send_message(content)
@@ -92,7 +70,9 @@ class ChatConsumer(WebsocketConsumer):
     }
 
     def connect(self):
-        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+        # self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+        self.room_name = self.scope["url_route"]["kwargs"]["room_id"]
+
         self.room_group_name = "chat_%s" % self.room_name
 
         # Join room group
@@ -132,3 +112,24 @@ class ChatConsumer(WebsocketConsumer):
     def chat_message(self, event):
         message = event['message']
         self.send(text_data=json.dumps(message))
+
+    def get_chat_history(self, chatId):
+        members = GroupMember.objects.filter(chat_room__id=chatId)
+        messages = Message.objects.filter(chat_room__id=chatId)
+
+        members_history = members.annotate(
+            Auther=F('user__username'),
+            Message=F('user__username'),
+            TypeMessage=Value('join_user', output_field=CharField()),
+            Timestamp=ExpressionWrapper(F('joined_datetime'), output_field=DateTimeField())
+        ).values('Auther', 'Timestamp', 'Message', 'TypeMessage')
+
+        messages_history = messages.annotate(
+            Auther=F('author__username'),
+            Message=F('message'),
+            TypeMessage=Value('message', output_field=CharField()),
+            Timestamp=ExpressionWrapper(F('timestamp'), output_field=DateTimeField())
+        ).values('Auther', 'Timestamp', 'Message', 'TypeMessage')
+
+        chat_history = members_history.union(messages_history, all=True).order_by('-Timestamp')
+        return chat_history

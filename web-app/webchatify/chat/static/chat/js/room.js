@@ -13,7 +13,7 @@ function waitForSocketConnection(callback) {
     }, 100);
 }
 
-function initialiseChat(username, roomName, chatRoomId) {
+function initialiseChat(username, chatRoomId) {
     waitForSocketConnection(() => {
         WebSocketInstance.fetchMessages(
             username,
@@ -21,11 +21,12 @@ function initialiseChat(username, roomName, chatRoomId) {
         );
         scrollToBottom();
     });
-    WebSocketInstance.connect(`${roomName}`);
+    WebSocketInstance.connect(`${chatRoomId}`);
 }
 
 function renderMessage(message) {
-     var wrapperDiv = $('<div>').addClass('wrapper');
+    console.log(message)
+    var wrapperDiv = $('<div>').addClass('wrapper');
     var msgDivTag = $('<div>').addClass('msg');
     var spanTimestampTag = $('<span>').addClass('timestamp').text(message.timestamp);
     var pTag = $('<p>').text(message.message);
@@ -41,17 +42,18 @@ function renderMessage(message) {
     msgDivTag.append(pTag);
     msgDivTag.append(spanTimestampTag);
     wrapperDiv.append(msgDivTag)
-    $('#chat-log').append(wrapperDiv    );
+    $('#chat-log').append(wrapperDiv);
 }
 
-function renderJoinMessage(username) {
+function renderJoinMessage(message) {
+
     var wrapperDiv = $('<div>')
         .addClass('wrapper');
 
     var msgDivTag = $('<div>')
         .addClass('msg')
         .addClass('joinUser')
-        .text(username);
+        .text(message.message);
 
     wrapperDiv.append(msgDivTag);
 
@@ -61,13 +63,14 @@ function renderJoinMessage(username) {
 
 function setMessages(messages) {
     for (const [key, message] of Object.entries(messages)) {
-        if(message.type_message == 'message'){
-            renderMessage(message);
+        switch (message.type_message) {
+            case 'message':
+                renderMessage(message);
+                break;
+            case 'join_user':
+                renderJoinMessage(message);
+                break;
         }
-        else if (message.type_message == 'join_user'){
-            renderJoinMessage(message.message)
-        }
-
     }
     scrollToBottom();
 }
@@ -78,8 +81,7 @@ function addMessage(message) {
 }
 
 function joinMessage(message) {
-    console.log(message)
-    renderJoinMessage(message.username);
+    renderJoinMessage(message);
 }
 
 function scrollToBottomAnimate() {
@@ -101,7 +103,7 @@ $(document).ready(function () {
         joinMessage.bind(this),
     );
 
-    initialiseChat(username, roomName, room_id);
+    initialiseChat(username, room_id);
 
     $('#chat-message-input').on('keyup', function (e) {
         if (e.keyCode === 13) {  // enter, return
@@ -110,6 +112,7 @@ $(document).ready(function () {
     });
 
     $('#chat-message-submit').on('click', function (e) {
+        debugger;
         const messageInputDom = $('#chat-message-input');
         if (messageInputDom.val() != '') {
             const messageObject = {

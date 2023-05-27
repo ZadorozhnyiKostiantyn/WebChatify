@@ -1,10 +1,12 @@
-from django.urls import path, include, re_path
+from django.urls import path, re_path
+
 from . import views
 
 urlpatterns = [
-    path('', views.index),
-    path('login/', views.login_page, name='login'),
-    path('register/', views.register, name='register'),
-    path('logout/', views.logout_user, name='logout'),
-    re_path(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
+    path('', views.IndexView.as_view(), name='index'),
+    path('login/', views.LoginPageView.as_view(), name='login'),
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    re_path(r'^ajax/validate_username/$', views.ValidateUsernameView.as_view(), name='validate_username'),
 ]
+
