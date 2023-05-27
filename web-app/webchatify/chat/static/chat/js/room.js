@@ -1,155 +1,167 @@
 import WebSocketInstance from "./websocket.js";
 
-function waitForSocketConnection(callback) {
-    setTimeout(function () {
-        if (WebSocketInstance.state() === 1) {
-            console.log("Connection is made");
-            callback();
-            return;
-        } else {
-            console.log("Wait for connection...");
-            waitForSocketConnection(callback);
-        }
-    }, 100);
-}
-
-function initialiseChat(username, chatRoomId) {
-    waitForSocketConnection(() => {
-        WebSocketInstance.fetchMessages(
-            username,
-            chatRoomId
-        );
-        scrollToBottom();
-    });
-    WebSocketInstance.connect(`${chatRoomId}`);
-}
-
-function renderMessage(message) {
-    var wrapperDiv = $('<div>').addClass('wrapper');
-    var msgDivTag = $('<div>').addClass('msg');
-    var spanTimestampTag = $('<span>').addClass('timestamp').text(message.timestamp);
-    var pTag = $('<p>').text(message.message);
-
-    if (message.author === username) {
-        $(msgDivTag).addClass('messageSent');
-    } else {
-        var spanUsernameTag = $('<span>').addClass('username').text(`@${message.author.toLowerCase()}`);
-        $(msgDivTag).addClass('messageReceived');
-        msgDivTag.append(spanUsernameTag);
+class Chat {
+    constructor() {
+        this.username = null;
+        this.roomId = null;
+        this.convHistory = null;
     }
 
-    msgDivTag.append(pTag);
-    msgDivTag.append(spanTimestampTag);
-    wrapperDiv.append(msgDivTag)
-    $('#chat-log').append(wrapperDiv);
-}
-
-
-function renderActionUserMessage(message, actionClass) {
-    var wrapperDiv = $('<div>')
-        .addClass('wrapper');
-
-    var msgDivTag = $('<div>')
-        .addClass('msg')
-        .addClass('userAction')
-        .addClass(actionClass)
-        .text(message.message);
-
-    wrapperDiv.append(msgDivTag);
-
-    $('#chat-log').append(wrapperDiv);
-}
-
-function renderJoinMessage(message) {
-    renderActionUserMessage(message, 'join');
-}
-
-function renderLeaveMessage(message) {
-    renderActionUserMessage(message, 'leave');
-}
-
-
-function setMessages(messages) {
-    for (const [key, message] of Object.entries(messages)) {
-        switch (message.type) {
-            case 'message':
-                renderMessage(message);
-                break;
-            case 'join':
-                renderJoinMessage(message);
-                break;
-            case 'leave':
-                renderLeaveMessage(message);
-                break;
-        }
+    waitForSocketConnection(callback) {
+        setTimeout(function () {
+            if (WebSocketInstance.state() === 1) {
+                console.log("Connection is made");
+                callback();
+                return;
+            } else {
+                console.log("Wait for connection...");
+                this.waitForSocketConnection(callback);
+            }
+        }, 100);
     }
-    scrollToBottom();
-}
 
-function addMessage(message) {
-    renderMessage(message);
-    scrollToBottomAnimate();
-}
+    initialise(username, roomId) {
+        this.username = username;
+        this.roomId = roomId;
 
-function joinMessage(message) {
-    renderJoinMessage(message);
-}
+        this.waitForSocketConnection(() => {
+            WebSocketInstance.fetchMessages(this.username, this.roomId);
+            this.scrollToBottom();
+        });
 
-function leaveMessage(message){
-    renderLeaveMessage(message)
-}
+        WebSocketInstance.connect(`${this.roomId}`);
+    }
 
-function scrollToBottomAnimate() {
-    var convHistory = $(".convHistory");
-    convHistory.animate({scrollTop: convHistory.prop("scrollHeight")}, 500);
-}
+    renderMessage(message) {
+        const wrapperDiv = $('<div>').addClass('wrapper');
+        const msgDivTag = $('<div>').addClass('msg');
+        const spanTimestampTag = $('<span>').addClass('timestamp').text(message.timestamp);
+        const pTag = $('<p>').text(message.message);
 
-function scrollToBottom() {
-    var convHistory = $(".convHistory");
-    convHistory.scrollTop(convHistory.prop("scrollHeight"));
-}
-
-$(document).ready(function () {
-    var convHistory = $(".convHistory");
-
-    WebSocketInstance.addCallbacks(
-        setMessages.bind(this),
-        addMessage.bind(this),
-        joinMessage.bind(this),
-        leaveMessage.bind(this)
-    );
-
-    initialiseChat(username, room_id);
-
-    $('#chat-message-input').on('keyup', function (e) {
-        if (e.keyCode === 13) {  // enter, return
-            $('#chat-message-submit').click();
-        }
-    });
-
-    $('#chat-message-submit').on('click', function (e) {
-        const messageInputDom = $('#chat-message-input');
-        if (messageInputDom.val() != '') {
-            const messageObject = {
-                'message': messageInputDom.val(),
-                'from': username,
-                'chatId': room_id
-            };
-            WebSocketInstance.newChatMessage(messageObject);
-            messageInputDom.val('');
-        }
-    });
-
-    convHistory.scroll(function () {
-        if (convHistory.scrollTop() < convHistory.prop("scrollHeight") - convHistory.height()) {
-            $('#scroll-down-button').fadeIn();
+        if (message.author === this.username) {
+            $(msgDivTag).addClass('messageSent');
         } else {
-            $('#scroll-down-button').fadeOut();
+            const spanUsernameTag = $('<span>').addClass('username').text(`@${message.author.toLowerCase()}`);
+            $(msgDivTag).addClass('messageReceived');
+            msgDivTag.append(spanUsernameTag);
         }
-    });
 
-    $('#scroll-down-button').click(function () {
+        msgDivTag.append(pTag);
+        msgDivTag.append(spanTimestampTag);
+        wrapperDiv.append(msgDivTag);
+        this.convHistory.append(wrapperDiv);
+    }
+
+    renderActionUserMessage(message, actionClass) {
+        const wrapperDiv = $('<div>').addClass('wrapper');
+        const msgDivTag = $('<div>')
+            .addClass('msg')
+            .addClass('userAction')
+            .addClass(actionClass)
+            .text(message.message);
+
+        wrapperDiv.append(msgDivTag);
+        this.convHistory.append(wrapperDiv);
+    }
+
+    renderJoinMessage(message) {
+        this.renderActionUserMessage(message, 'join');
+    }
+
+    renderLeaveMessage(message) {
+        this.renderActionUserMessage(message, 'leave');
+    }
+
+    setMessages(messages) {
+        for (const [key, message] of Object.entries(messages)) {
+            switch (message.type) {
+                case 'message':
+                    this.renderMessage(message);
+                    break;
+                case 'join':
+                    this.renderJoinMessage(message);
+                    break;
+                case 'leave':
+                    this.renderLeaveMessage(message);
+                    break;
+            }
+        }
+        this.scrollToBottom();
+    }
+
+    addMessage(message) {
+        this.renderMessage(message);
+        this.scrollToBottomAnimate();
+    }
+
+    joinMessage(message) {
+        this.renderJoinMessage(message);
+        this.scrollToBottomAnimate()
+    }
+
+    leaveMessage(message) {
+        this.renderLeaveMessage(message);
+        this.scrollToBottomAnimate()
+    }
+
+    scrollToBottomAnimate() {
+        const convHistory = $(".convHistory");
         convHistory.animate({scrollTop: convHistory.prop("scrollHeight")}, 500);
-    });
-});
 
+    }
+
+    scrollToBottom() {
+        const convHistory = $(".convHistory");
+        convHistory.scrollTop(convHistory.prop("scrollHeight"));
+    }
+
+    init() {
+        this.convHistory = $(".convHistory");
+        const messageInputDom = $('#chat-message-input');
+
+        WebSocketInstance.addCallbacks(
+            this.setMessages.bind(this),
+            this.addMessage.bind(this),
+            this.joinMessage.bind(this),
+            this.leaveMessage.bind(this)
+        );
+
+        this.initialise(username, room_id);
+
+        $('#chat-message-input').on('keyup', (e) => {
+            if (e.keyCode === 13) {  // enter, return
+                $('#chat-message-submit').click();
+            }
+        });
+
+        $('#chat-message-submit').on('click', (e) => {
+            if (messageInputDom.val() !== '') {
+                const messageObject = {
+                    'message': messageInputDom.val(),
+                    'from': this.username,
+                    'chatId': this.roomId
+                };
+                WebSocketInstance.newChatMessage(messageObject);
+                messageInputDom.val('');
+            }
+            this.scrollToBottomAnimate()
+        });
+
+        this.convHistory.on('scroll', () => {
+            if (this.convHistory.scrollTop() < this.convHistory.prop("scrollHeight") - this.convHistory.height()) {
+                $('#scroll-down-button').fadeIn();
+            } else {
+                $('#scroll-down-button').fadeOut();
+            }
+        });
+
+        $('#scroll-down-button').click(() => {
+            this.scrollToBottomAnimate();
+        });
+    }
+}
+
+$(document).ready(() => {
+    const chat = new Chat();
+    chat.init();
+});

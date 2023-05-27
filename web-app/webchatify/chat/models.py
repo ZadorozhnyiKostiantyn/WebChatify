@@ -1,7 +1,11 @@
-from django.db import models
-from django.contrib.auth.models import User
 import datetime
+import shutil
+import os
+
+from django.contrib.auth.models import User
+from django.db import models
 from model_utils import Choices
+from webchatify import settings
 
 
 def get_upload_chat_path(instance, filename):
@@ -29,7 +33,11 @@ class ChatRoom(models.Model):
     )
     invite_link = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
-    photo = models.ImageField(null=True, upload_to=get_upload_chat_path)
+    photo = models.ImageField(null=True, blank=True, upload_to=get_upload_chat_path)
+
+    def delete_folder(self):
+        if self.photo:
+            shutil.rmtree(os.path.join(settings.MEDIA_ROOT, f'{self.owner.username}/group/{self.invite_link}'))
 
 
 class GroupMember(models.Model):
@@ -71,7 +79,6 @@ class Message(models.Model):
         choices=TYPE,
         default=MESSAGE
     )
-
 
     def __str__(self):
         return self.author.username

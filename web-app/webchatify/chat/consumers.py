@@ -35,7 +35,7 @@ class ChatConsumer(WebsocketConsumer):
     def join_message(self, data):
         author = data['from']
         author_user = User.objects.filter(username=author)[0]
-        message = Message.objects.create(
+        Message.objects.create(
             author=author_user,
             message=f'{author} has joined the group',
             chat_room=ChatRoom.objects.filter(id=data['chatId'])[0],
@@ -49,18 +49,8 @@ class ChatConsumer(WebsocketConsumer):
         }
         self.send_message(content)
 
-
     def leave_message(self, data):
         author = User.objects.filter(username=data['from'])[0]
-        print()
-        print('leave_message ChatConsumer line 56')
-        print()
-        message = Message.objects.create(
-            author=author,
-            message=f'{author.username} has leaved the group',
-            chat_room=ChatRoom.objects.filter(id=data['chatId'])[0],
-            type="LEAVE"
-        )
         content = {
             'command': 'leave_message',
             'message': {
@@ -131,27 +121,6 @@ class ChatConsumer(WebsocketConsumer):
     def chat_message(self, event):
         message = event['message']
         self.send(text_data=json.dumps(message))
-
-    # def get_chat_history(self, chatId):
-    #     members = GroupMember.objects.filter(chat_room__id=chatId)
-    #     messages = Message.objects.filter(chat_room__id=chatId)
-    #
-    #     members_history = members.annotate(
-    #         Auther=F('user__username'),
-    #         Message=F('user__username'),
-    #         TypeMessage=Value('join_user', output_field=CharField()),
-    #         Timestamp=ExpressionWrapper(F('joined_datetime'), output_field=DateTimeField())
-    #     ).values('Auther', 'Timestamp', 'Message', 'TypeMessage')
-    #
-    #     messages_history = messages.annotate(
-    #         Auther=F('author__username'),
-    #         Message=F('message'),
-    #         TypeMessage=Value('message', output_field=CharField()),
-    #         Timestamp=ExpressionWrapper(F('timestamp'), output_field=DateTimeField())
-    #     ).values('Auther', 'Timestamp', 'Message', 'TypeMessage')
-    #
-    #     chat_history = members_history.union(messages_history, all=True).order_by('-Timestamp')
-    #     return chat_history
 
     def get_chat_history(self, chatId):
         return Message.objects.filter(chat_room__id=chatId).order_by('-timestamp')

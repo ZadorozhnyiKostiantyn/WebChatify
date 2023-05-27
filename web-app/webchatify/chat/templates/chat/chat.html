@@ -2,35 +2,40 @@
 
 
 {% block list_chat_rooms %}
-    {% for chat_room in chat_rooms %}
-        <div class="chatButton" data-name="{{ chat_room.name }}" data-id="{{ chat_room.id }}">
-            <div class="chatInfo">
-                <div class="image">
-                    <img src="{{ chat_room.photo.url }}" alt="">
-                </div>
-                <div class="textInfo">
-                    <p class="name">
-                        {{ chat_room.name }}
-                    </p>
-
-                    <p class="message">Message...</p>
-                </div>
-            </div>
-
-            <div class="status onTop">
-                <p class="date">00:02</p>
-                <p class="count">10</p>
-                <i class="material-icons read">done_all</i>
-            </div>
+{% for chat_room in chat_rooms %}
+<div class="chatButton" data-name="{{ chat_room.name }}" data-id="{{ chat_room.id }}">
+    <div class="chatInfo">
+        <div class="image">
+            {% if chat_room.photo.url is not none %}
+            <img src="{{ chat_room.photo.url }}" alt="">
+            {% else %}
+            <img src="https://cdn-icons-png.flaticon.com/128/839/839627.png" alt="">
+            {% endif %}
         </div>
-    {% endfor %}
+
+        <div class="textInfo">
+            <p class="name">
+                {{ chat_room.name }}
+            </p>
+
+            <p class="message">Message...</p>
+        </div>
+    </div>
+
+    <div class="status onTop">
+        <p class="date">00:02</p>
+        <p class="count">10</p>
+        <i class="material-icons read">done_all</i>
+    </div>
+</div>
+{% endfor %}
 {% endblock %}
 
 
 {% block room %}
-    <div class="chatNotSelected userBg">
-        <div class="selectChat">
-            <h4>Select a chat to start messaging </h4>
-        </div>
+<div class="chatNotSelected userBg">
+    <div class="selectChat">
+        <h4>Select a chat to start messaging </h4>
     </div>
+</div>
 {% endblock %}

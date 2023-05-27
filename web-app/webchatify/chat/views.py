@@ -136,10 +136,15 @@ class LeaveChatRoomView(LoginRequiredMixin, View):
         user = User.objects.filter(id=request.user.id)[0]
 
         if GroupMember.objects.filter(user=user, chat_room=chat_room).exists():
-            print()
-            print('delete line: 135 class: LeaveChatRoomView')
-            print()
             GroupMember.objects.get(user=user, chat_room=chat_room).delete()
+            print(GroupMember.objects.filter(chat_room=chat_room).count())
+
+            Message.objects.create(
+                author=user,
+                message=f'{user.username} has leaved the group',
+                chat_room=chat_room,
+                type="LEAVE"
+            )
 
             channel_layer = get_channel_layer()
 
@@ -152,5 +157,8 @@ class LeaveChatRoomView(LoginRequiredMixin, View):
                 }
             )
 
-        return redirect(reverse('chat'))
+            if GroupMember.objects.filter(chat_room=chat_room).count() == 0:
+                chat_room.delete_folder()
+                chat_room.delete()
 
+        return redirect('chat')
