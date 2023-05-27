@@ -41,7 +41,10 @@ class Chat {
         if (message.author === this.username) {
             $(msgDivTag).addClass('messageSent');
         } else {
-            const spanUsernameTag = $('<span>').addClass('username').text(`@${message.author.toLowerCase()}`);
+            const spanUsernameTag = $('<span>')
+                .addClass('username')
+                .text(`@${message.author.toLowerCase()}`)
+                .css({color: message.color_session});
             $(msgDivTag).addClass('messageReceived');
             msgDivTag.append(spanUsernameTag);
         }

@@ -8,6 +8,8 @@ from django.views import View
 from django.views.generic import FormView
 
 from .forms import CreateUserForm
+from chat.models import Profile
+import random
 
 
 class IndexView(View):
@@ -31,6 +33,9 @@ class LoginPageView(View):
 
         if user is not None:
             login(request=request, user=user)
+            profile = Profile.objects.get(user__id=request.user.id)
+            profile.color_session = "#" + ''.join([random.choice('0123456789ABCDEF') for j in range(6)])
+            profile.save()
             return redirect('chat')
         else:
             messages.info(request=request, message='Username or password is incorrect')
@@ -51,6 +56,9 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         form.save()
+        Profile.create(
+            user=User.objects.get(username=form.username),
+        )
         messages.success(request=self.request, message='Account created successfully')
         return super().form_valid(form)
 

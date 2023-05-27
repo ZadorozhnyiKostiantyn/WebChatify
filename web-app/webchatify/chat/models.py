@@ -21,9 +21,9 @@ class Profile(models.Model):
         to=User,
         on_delete=models.CASCADE
     )
-    photo = models.ImageField(null=True, upload_to=get_upload_profile_path)
-    number = models.CharField(max_length=15)
-    color_session = models.CharField(max_length=50)
+    photo = models.ImageField(null=True, blank=True, upload_to=get_upload_profile_path)
+    number = models.CharField(max_length=15, null=True, blank=True)
+    color_session = models.CharField(max_length=50, null=True)
 
 
 class ChatRoom(models.Model):
@@ -79,6 +79,9 @@ class Message(models.Model):
         choices=TYPE,
         default=MESSAGE
     )
+
+    def get_color_profile(self):
+        return Profile.objects.get(user__id=self.author.id).color_session
 
     def __str__(self):
         return self.author.username

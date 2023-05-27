@@ -70,6 +70,7 @@ class ChatConsumer(WebsocketConsumer):
             'message': message.message,
             'timestamp': time,
             'type': message.get_type_display(),
+            'color_session': message.get_color_profile()
         }
 
     commands = {
