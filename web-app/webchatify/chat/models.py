@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+from model_utils import Choices
 
 
 def get_upload_chat_path(instance, filename):
@@ -16,9 +17,9 @@ class Profile(models.Model):
         to=User,
         on_delete=models.CASCADE
     )
-    profile_photo = models.ImageField(null=True, upload_to=get_upload_profile_path)
-    profile_number = models.CharField(max_length=15)
-    color = models.CharField(max_length=50)
+    photo = models.ImageField(null=True, upload_to=get_upload_profile_path)
+    number = models.CharField(max_length=15)
+    color_session = models.CharField(max_length=50)
 
 
 class ChatRoom(models.Model):
@@ -45,6 +46,15 @@ class GroupMember(models.Model):
 
 
 class Message(models.Model):
+    MESSAGE = "MESSAGE"
+    JOIN = "JOIN"
+    LEAVE = "LEAVE"
+    TYPE = Choices(
+        (MESSAGE, "message"),
+        (JOIN, "join"),
+        (LEAVE, "leave"),
+    )
+
     author = models.ForeignKey(
         to=User,
         related_name='author_message',
@@ -56,6 +66,12 @@ class Message(models.Model):
         to=ChatRoom,
         on_delete=models.CASCADE
     )
+    type = models.CharField(
+        max_length=10,
+        choices=TYPE,
+        default=MESSAGE
+    )
+
 
     def __str__(self):
         return self.author.username

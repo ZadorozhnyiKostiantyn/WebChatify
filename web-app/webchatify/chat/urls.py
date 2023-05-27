@@ -8,5 +8,5 @@ urlpatterns = [
     path("<int:room_id>/", views.RoomView.as_view(), name="room"),
     path("invite/<str:invite_link>", views.JoinChatRoomView.as_view(), name='invite'),
     path("get_invite_link/", views.GetInviteLinkView.as_view(), name='get_invite_link'),
+    path("leave_chat_room/<int:room_id>/", views.LeaveChatRoomView.as_view(), name='leave_chat_room'),
 ]
-

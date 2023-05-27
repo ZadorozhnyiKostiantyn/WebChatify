@@ -125,7 +125,7 @@ input[type="checkbox"] {
   }
 
   .option.leaveGroup {
-    color: #8d0101;
+    color: #d62c2c;
   }
 }
 
@@ -1047,22 +1047,25 @@ div[class~="onTop"] {
 
 .msg {
   position: relative;
-  width: auto;
-  min-width: 100px;
-  max-width: 45%;
+  display: inline-block;
+  width: fit-content;
+  //width: auto;
+  //min-width: 100px;
+  //max-width: 45%;
   height: auto;
   padding-left: 10px;
-  padding-right: 30px;
+  padding-right: 50px;
   padding-top: 30px;
-  padding-bottom: 25px;
+  padding-bottom: 30px;
   margin: 0px 15px;
+  margin-top: 20px;
   background: $bg_message_received;
   border-radius: 10px;
   clear: both;
 
-  &:nth-last-child(1) {
-    margin-bottom: 20px;
-  }
+  //&:nth-last-child(1) {
+  //  margin-bottom: 20px;
+  //}
 
   .timestamp {
     display: block;
@@ -1111,26 +1114,35 @@ div[class~="onTop"] {
   }
 }
 
-.joinUser {
+.userAction {
   padding: 2px 10px;
   display: flex;
   align-items: center;
   position: relative;
+  display: inline-block;
   left: 50%;
   transform: translateX(-50%);
   justify-content: center;
   height: 20px;
   font-size: 14px;
-  min-width: 30px;
-  max-width: 100px;
-  color: #000000;
+  width: fit-content;
   font-weight: bold;
   text-align: center;
   margin-top: 20px;
   margin-bottom: 0px;
-  background: $text_color;
   border-radius: 10px;
 }
+
+.join{
+    color: #000000;
+    background: $text_color;
+  }
+
+  .leave {
+    color: $text_color;
+    background: #b02e2e;
+  }
+
 
 .wrapper {
   clear: both;

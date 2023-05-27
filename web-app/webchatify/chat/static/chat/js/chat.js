@@ -190,16 +190,15 @@ $(document).ready(function () {
                     alert('Failed to get invite link. Please try again.');
                 }
             });
-        } else {
-
+        } else if ($(this).hasClass("leaveGroup")) {
+            window.location.pathname = `/chat/leave_chat_room/${chatId}`;
         }
     });
 
 
     $('.copyLink').click(function () {
         var inviteLink = $('#inviteLinkInput').val();
-        copyToClipboard(inviteLink); // Копіювати посилання в буфер обміну
-        alert('Invite link copied!');
+        copyToClipboard(inviteLink);
         closeAllOverlay()
     });
 

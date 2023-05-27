@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.views import View
 
 from .forms import CreateNewGroupForm
-from .models import ChatRoom, GroupMember
+from .models import ChatRoom, GroupMember, Message
 
 
 class ChatView(LoginRequiredMixin, View):
@@ -43,11 +43,19 @@ class CreateGroupView(LoginRequiredMixin, View):
             post.invite_link = secrets.token_hex(6).upper()
             post.save()
 
+            chat_room = ChatRoom.objects.filter(invite_link=post.invite_link)[0]
+
             GroupMember.objects.create(
                 user=User.objects.filter(id=request.user.id)[0],
-                chat_room=ChatRoom.objects.filter(invite_link=post.invite_link)[0]
+                chat_room=chat_room
             )
 
+            message = Message.objects.create(
+                author=request.user,
+                message=f'{chat_room.name} was created',
+                chat_room=chat_room,
+                type="JOIN"
+            )
             return redirect(reverse('chat'))
 
         return render(request, self.template_name, {'group': group})
@@ -112,8 +120,37 @@ class JoinChatRoomView(LoginRequiredMixin, View):
                 f'chat_{chat_room.id}',
                 {
                     'type': 'join_message',
-                    'username': user.username,
+                    'from': user.username,
+                    'chatId': chat_room.id
                 }
             )
 
         return redirect(reverse('room', kwargs={'room_id': chat_room.id}))
+
+
+class LeaveChatRoomView(LoginRequiredMixin, View):
+    login_url = 'login'
+
+    def get(self, request, room_id):
+        chat_room = ChatRoom.objects.get(id=room_id)
+        user = User.objects.filter(id=request.user.id)[0]
+
+        if GroupMember.objects.filter(user=user, chat_room=chat_room).exists():
+            print()
+            print('delete line: 135 class: LeaveChatRoomView')
+            print()
+            GroupMember.objects.get(user=user, chat_room=chat_room).delete()
+
+            channel_layer = get_channel_layer()
+
+            async_to_sync(channel_layer.group_send)(
+                f'chat_{chat_room.id}',
+                {
+                    'type': 'leave_message',
+                    'from': user.username,
+                    'chatId': chat_room.id
+                }
+            )
+
+        return redirect(reverse('chat'))
+

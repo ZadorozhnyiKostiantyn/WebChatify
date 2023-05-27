@@ -25,7 +25,6 @@ function initialiseChat(username, chatRoomId) {
 }
 
 function renderMessage(message) {
-    console.log(message)
     var wrapperDiv = $('<div>').addClass('wrapper');
     var msgDivTag = $('<div>').addClass('msg');
     var spanTimestampTag = $('<span>').addClass('timestamp').text(message.timestamp);
@@ -45,14 +44,15 @@ function renderMessage(message) {
     $('#chat-log').append(wrapperDiv);
 }
 
-function renderJoinMessage(message) {
 
+function renderActionUserMessage(message, actionClass) {
     var wrapperDiv = $('<div>')
         .addClass('wrapper');
 
     var msgDivTag = $('<div>')
         .addClass('msg')
-        .addClass('joinUser')
+        .addClass('userAction')
+        .addClass(actionClass)
         .text(message.message);
 
     wrapperDiv.append(msgDivTag);
@@ -60,15 +60,26 @@ function renderJoinMessage(message) {
     $('#chat-log').append(wrapperDiv);
 }
 
+function renderJoinMessage(message) {
+    renderActionUserMessage(message, 'join');
+}
+
+function renderLeaveMessage(message) {
+    renderActionUserMessage(message, 'leave');
+}
+
 
 function setMessages(messages) {
     for (const [key, message] of Object.entries(messages)) {
-        switch (message.type_message) {
+        switch (message.type) {
             case 'message':
                 renderMessage(message);
                 break;
-            case 'join_user':
+            case 'join':
                 renderJoinMessage(message);
+                break;
+            case 'leave':
+                renderLeaveMessage(message);
                 break;
         }
     }
@@ -82,6 +93,10 @@ function addMessage(message) {
 
 function joinMessage(message) {
     renderJoinMessage(message);
+}
+
+function leaveMessage(message){
+    renderLeaveMessage(message)
 }
 
 function scrollToBottomAnimate() {
@@ -101,6 +116,7 @@ $(document).ready(function () {
         setMessages.bind(this),
         addMessage.bind(this),
         joinMessage.bind(this),
+        leaveMessage.bind(this)
     );
 
     initialiseChat(username, room_id);
@@ -112,7 +128,6 @@ $(document).ready(function () {
     });
 
     $('#chat-message-submit').on('click', function (e) {
-        debugger;
         const messageInputDom = $('#chat-message-input');
         if (messageInputDom.val() != '') {
             const messageObject = {

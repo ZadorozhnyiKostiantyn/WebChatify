@@ -54,6 +54,9 @@ class WebSocketService {
         if (command === "join_message") {
             this.callbacks[command](parseData.message);
         }
+        if (command === "leave_message") {
+            this.callbacks[command](parseData.message);
+        }
     }
 
     fetchMessages(username, chatId) {
@@ -84,11 +87,13 @@ class WebSocketService {
     addCallbacks(
         messagesCallback,
         newMessageCallback,
-        newJoinMessageCallback
+        newJoinMessageCallback,
+        newLeaveMessageCallback
     ) {
         this.callbacks["messages"] = messagesCallback;
         this.callbacks["new_message"] = newMessageCallback;
         this.callbacks["join_message"] = newJoinMessageCallback;
+        this.callbacks["leave_message"] = newLeaveMessageCallback;
     }
 
     state() {
