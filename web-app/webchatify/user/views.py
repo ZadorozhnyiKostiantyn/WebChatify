@@ -43,9 +43,9 @@ class LoginPageView(View):
         return render(request, self.template_name)
 
     def generate_light_color_hex(self):
-        r = random.randint(140, 255)  # red
-        g = random.randint(140, 255)  # green
-        b = random.randint(140, 255)  # blue
+        r = random.randint(120, 255)  # red
+        g = random.randint(120, 255)  # green
+        b = random.randint(120, 255)  # blue
         return "#{:02x}{:02x}{:02x}".format(r, g, b)  # повертаємо кольоровий код у форматі #RRGGBB
 
 

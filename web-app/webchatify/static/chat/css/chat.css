@@ -1,18 +1,3 @@
-/* FIRST, THE OVERLAY ELEMENTS */
-/* small conversation menu */
-/* switch to mobile version screen */
-/* side menu */
-/* configuration screen */
-/* dark overlay element */
-/* ----------------- */
-/* MAIN APP ELEMENTS */
-/* ----------------- */
-/* THE CONVERSATION HISTORY CSS */
-/* THE REPLY BAR CSS */
-/* hidden, while not complete */
-/* CSS FOR THE EMOJI IMAGES, JUST SOME */
-/* NIGHT MODE THEMING */
-/* SOLVING RESPONSIVE DESIGN ISSUES */
 * {
   margin: 0px;
   padding: 0px; }
@@ -43,6 +28,7 @@ input[type="checkbox"] {
   margin: 7px;
   margin-right: 15px; }
 
+/* FIRST, THE OVERLAY ELEMENTS */
 .alerts {
   position: absolute;
   bottom: 10px;
@@ -55,6 +41,7 @@ input[type="checkbox"] {
   box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.4);
   display: none; }
 
+/* SMALL CONVERSATION MENU */
 .moreMenu {
   position: absolute;
   width: 150px;
@@ -130,6 +117,7 @@ input[type="checkbox"] {
       border-radius: 3px;
       cursor: pointer; }
 
+/* SWITCH TO MOBILE VERSION SCREEN */
 .switchMobile {
   position: absolute;
   width: 65%;
@@ -165,6 +153,7 @@ input[type="checkbox"] {
     border-radius: 4px;
     padding: 10px; }
 
+/* SIDE MENU */
 .menuWrap {
   position: absolute;
   width: 30%;
@@ -192,13 +181,13 @@ input[type="checkbox"] {
   padding: 15px 25px;
   margin-bottom: 15px; }
   .me .image {
-    width: 70px;
-    height: 70px;
-    background: #252525 no-repeat center;
+    width: 90px;
+    height: 90px;
+    background: url("https://cdn-icons-png.flaticon.com/128/3177/3177440.png") no-repeat center;
     background-size: cover;
     border-radius: 100%;
     cursor: pointer; }
-  .me .settings {
+  .me .infoUser {
     position: absolute;
     right: 20px;
     bottom: 65px;
@@ -208,7 +197,7 @@ input[type="checkbox"] {
     color: #FFF;
     border-radius: 100%;
     background: rgba(0, 0, 0, 0.15); }
-    .me .settings:hover {
+    .me .infoUser:hover {
       background: #252525; }
   .me .cloud {
     position: absolute;
@@ -268,11 +257,12 @@ nav {
   font-size: 12px;
   color: #BBB; }
 
+/* CONFIGURATION SCREEN */
 .config {
   border-radius: 20px;
   position: absolute;
-  width: 50%;
-  height: 88vh;
+  width: fit-content;
+  height: auto;
   left: 0px;
   right: -200vw;
   top: 50%;
@@ -302,7 +292,7 @@ nav {
 .profile .image {
   width: 140px;
   height: 140px;
-  background: #252525 no-repeat center;
+  background: url("https://cdn-icons-png.flaticon.com/128/3177/3177440.png") no-repeat center;
   background-size: cover;
   border-radius: 100%;
   float: left;
@@ -508,6 +498,7 @@ nav {
     font-size: 14px;
     color: #BBB; }
 
+/* DARK OVERLAY ELEMENT */
 .overlay {
   position: absolute;
   width: 100%;
@@ -516,6 +507,9 @@ nav {
   z-index: 2;
   display: none; }
 
+/* ----------------- */
+/* MAIN APP ELEMENTS */
+/* ----------------- */
 .leftPanel {
   position: relative;
   display: inline-block;
@@ -573,7 +567,7 @@ header {
   overflow-x: hidden;
   overflow-y: scroll; }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* HIDE SCROLLBAR FOR CHROME, SAFARI AND OPERA */
 .chats::-webkit-scrollbar {
   display: none; }
 
@@ -751,6 +745,7 @@ div[class~="onTop"] > .count {
   top: 45%;
   left: 38%; }
 
+/* THE CONVERSATION HISTORY SCSS */
 .convHistory {
   float: left;
   position: relative;
@@ -759,7 +754,7 @@ div[class~="onTop"] > .count {
   overflow-x: hidden;
   overflow-y: scroll; }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* HIDE SCROLLBAR FOR CHROME, SAFARI AND OPERA */
 .convHistory::-webkit-scrollbar {
   display: none; }
 
@@ -807,7 +802,8 @@ div[class~="onTop"] > .count {
   margin-top: 10px;
   background: #2c2c2c;
   border-radius: 10px;
-  clear: both; }
+  clear: both;
+  font-weight: 600; }
   .msg:nth-last-child(1) {
     margin-bottom: 10px; }
   .msg .timestamp {
@@ -878,6 +874,7 @@ div[class~="onTop"] > .count {
   color: #fff;
   background: #b02e2e; }
 
+/* THE REPLY BAR SCSS */
 .replyBar {
   width: 100%;
   height: 70px;
@@ -954,40 +951,16 @@ div[class~="onTop"] > .count {
       background-position: center;
       background-size: 70%; }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* HIDE SCROLLBAR FOR CHROME, SAFARI AND OPERA */
 .emojiList::-webkit-scrollbar {
   display: none; }
 
-.stickerList {
-  width: 100%;
-  height: 150px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  display: none; }
-  .stickerList .pick {
-    width: 80px;
-    height: 80px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 65%;
-    transition: all 0.15s ease-in-out; }
-    .stickerList .pick:hover {
-      background: #252525;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 65%; }
-
-.DarkTheme {
-  background: #222; }
-  .DarkTheme .mainApp {
-    background: #222; }
-
+/* SOLVING RESPONSIVE DESIGN ISSUES */
 @media screen and (max-width: 1180px) {
   .config {
     width: 60%; } }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 700px) {
   .config {
     width: 90%; } }
 

@@ -1,8 +1,7 @@
-$color_4: #999;
-
-$color_6: #419fd9;
-$color_7: #BBB; // color options and nav
-$color_13: #777; // color option and nav
+$btn_cancel_submit: #999;
+$blue_color: #419fd9;
+$text_colot_for_option_and_nav: #BBB;
+$reply_bar_attach: #777;
 $spanColorMessage: #a6a6a6;
 $active: #3b3b3b;
 $bg_button: #555;
@@ -14,26 +13,12 @@ $bg_chat: #c9bfd3;
 $hover: #252525;
 $border-color_1: #419fd9;
 $bg_message_send: #4faefd;
-$bt_setting: #cebaf1;
+$btn_setting: #cebaf1;
 $joinUser: #f69c42;
 $message_atribute_color: #2a2a2a;
 $bg_message_received: #2c2c2c;
 
-/* FIRST, THE OVERLAY ELEMENTS */
-/* small conversation menu */
-/* switch to mobile version screen */
-/* side menu */
-/* configuration screen */
-/* dark overlay element */
-/* ----------------- */
-/* MAIN APP ELEMENTS */
-/* ----------------- */
-/* THE CONVERSATION HISTORY CSS */
-/* THE REPLY BAR CSS */
-/* hidden, while not complete */
-/* CSS FOR THE EMOJI IMAGES, JUST SOME */
-/* NIGHT MODE THEMING */
-/* SOLVING RESPONSIVE DESIGN ISSUES */
+
 * {
   margin: 0px;
   padding: 0px;
@@ -42,7 +27,6 @@ $bg_message_received: #2c2c2c;
 body {
   overflow: hidden;
   background: $background-color;
-  //url(https://s-media-cache-ak0.pinimg.com/originals/51/ed/c0/51edc046eb80046ee4755ee71d0f19ca.jpg);
   font-family: monospace, serif;
   font-size: 16px;
 }
@@ -72,19 +56,21 @@ input[type="checkbox"] {
   margin-right: 15px;
 }
 
+/* FIRST, THE OVERLAY ELEMENTS */
 .alerts {
   position: absolute;
   bottom: 10px;
   left: 10px;
   z-index: 9999;
   padding: 10px;
-  color: $color_7;
+  color: $text_colot_for_option_and_nav;
   border-radius: 4px;
   background: $background-color;
   box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.4);
   display: none;
 }
 
+/* SMALL CONVERSATION MENU */
 .moreMenu {
   position: absolute;
   width: 150px;
@@ -105,7 +91,7 @@ input[type="checkbox"] {
     display: flex;
     align-items: center;
     background: $background-color;
-    color: $color_7;
+    color: $text_colot_for_option_and_nav;
     font-size: 14px;
     text-align: left;
     border-radius: 10px;
@@ -181,7 +167,7 @@ input[type="checkbox"] {
   }
 }
 
-
+/* SWITCH TO MOBILE VERSION SCREEN */
 .switchMobile {
   position: absolute;
   width: 65%;
@@ -224,6 +210,7 @@ input[type="checkbox"] {
   }
 }
 
+/* SIDE MENU */
 .menuWrap {
   position: absolute;
   width: 30%;
@@ -254,15 +241,15 @@ input[type="checkbox"] {
   margin-bottom: 15px;
 
   .image {
-    width: 70px;
-    height: 70px;
-    background: $hover no-repeat center;
+    width: 90px;
+    height: 90px;
+    background: url("https://cdn-icons-png.flaticon.com/128/3177/3177440.png") no-repeat center;
     background-size: cover;
     border-radius: 100%;
     cursor: pointer;
   }
 
-  .settings {
+  .infoUser {
     position: absolute;
     right: 20px;
     bottom: 65px;
@@ -274,7 +261,6 @@ input[type="checkbox"] {
     background: rgba(0, 0, 0, 0.15);
 
     &:hover {
-      //background: rgba(0, 0, 0, 0.35);
       background: $hover;
     }
   }
@@ -290,7 +276,6 @@ input[type="checkbox"] {
     background: rgba(0, 0, 0, 0.09);
 
     &:hover {
-      //background: rgba(0, 0, 0, 0.35);
       background: $hover;
     }
   }
@@ -322,14 +307,14 @@ nav {
     background: $background-color;
     text-align: left;
     padding-left: 20px;
-    color: $color_7;
+    color: $text_colot_for_option_and_nav;
 
     &:hover {
       background: $hover;
     }
 
     > i {
-      color: $color_7;
+      color: $text_colot_for_option_and_nav;
       float: left;
     }
 
@@ -355,14 +340,16 @@ nav {
   left: 20px;
   bottom: 15px;
   font-size: 12px;
-  color: $color_7;
+  color: $text_colot_for_option_and_nav;
 }
 
+
+/* CONFIGURATION SCREEN */
 .config {
   border-radius: 20px;
   position: absolute;
-  width: 50%;
-  height: 88vh;
+  width: fit-content;
+  height: auto;
   left: 0px;
   right: -200vw;
   top: 50%;
@@ -396,7 +383,7 @@ nav {
   .image {
     width: 140px;
     height: 140px;
-    background: $hover no-repeat center;
+    background: url("https://cdn-icons-png.flaticon.com/128/3177/3177440.png") no-repeat center;
     background-size: cover;
     border-radius: 100%;
     float: left;
@@ -408,8 +395,7 @@ nav {
     font-size: 16px;
     font-weight: 600;
     font-family: monospace, serif;
-    background: $bt_setting;
-    //color: $text_color;
+    background: $btn_setting;
     border-radius: 4px;
     padding: 10px;
   }
@@ -424,11 +410,11 @@ nav {
     padding: 10px;
     margin-left: 10px;
     background: $background-color;
-    color: $color_7;
+    color: $text_colot_for_option_and_nav;
     font-family: monospace, serif;
 
     &:hover {
-      color: $color_6;
+      color: $blue_color;
     }
   }
 }
@@ -446,7 +432,7 @@ nav {
   }
 
   .pStatus {
-    color: $color_6;
+    color: $blue_color;
     margin-top: 5px;
     font-size: 14px;
     font-weight: 300;
@@ -465,7 +451,7 @@ nav {
   }
 
   .blue {
-    color: $color_6;
+    color: $blue_color;
   }
 
   label {
@@ -599,7 +585,7 @@ nav {
 
   .upload-label i {
     font-size: 24px;
-    color: $color_4;
+    color: $btn_cancel_submit;
   }
 
   .upload-label:hover {
@@ -650,7 +636,7 @@ nav {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    color: $color_4;
+    color: $btn_cancel_submit;
     background-color: $background-color;
 
   }
@@ -675,10 +661,11 @@ nav {
     margin-top: 3px;
     margin-left: 15px;
     font-size: 14px;
-    color: $color_7;
+    color: $text_colot_for_option_and_nav;
   }
 }
 
+/* DARK OVERLAY ELEMENT */
 .overlay {
   position: absolute;
   width: 100%;
@@ -688,6 +675,9 @@ nav {
   display: none;
 }
 
+/* ----------------- */
+/* MAIN APP ELEMENTS */
+/* ----------------- */
 .leftPanel {
   position: relative;
   display: inline-block;
@@ -711,7 +701,7 @@ header {
   height: 32px;
   margin: 20px 15px;
   margin-bottom: 0px;
-  color: $color_7;
+  color: $text_colot_for_option_and_nav;
   cursor: pointer;
   opacity: 0.6;
   background: none;
@@ -756,7 +746,7 @@ header {
   overflow-y: scroll;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* HIDE SCROLLBAR FOR CHROME, SAFARI AND OPERA */
 .chats::-webkit-scrollbar {
   display: none;
 }
@@ -797,7 +787,7 @@ header {
   }
 
   .textInfo {
-    margin-left: 0px; // Змініть цю відстань на потрібну вам відстань між зображенням і текстом
+    margin-left: 0px;
   }
 
   .name {
@@ -871,7 +861,7 @@ div[class~="onTop"] {
     right: 49px;
     bottom: 7px;
     background: $hover;
-    color: $color_6;
+    color: $blue_color;
   }
 }
 
@@ -931,7 +921,7 @@ div[class~="onTop"] {
     clear: left;
     margin-left: 30px;
     margin-top: 5px;
-    color: $color_6;
+    color: $blue_color;
     font-weight: 300;
     cursor: default;
   }
@@ -941,7 +931,7 @@ div[class~="onTop"] {
   > span {
     font-size: 12px;
     font-weight: 500;
-    color: $color_7;
+    color: $text_colot_for_option_and_nav;
     margin-left: 10px;
   }
 }
@@ -995,7 +985,7 @@ div[class~="onTop"] {
   left: 38%;
 }
 
-
+/* THE CONVERSATION HISTORY SCSS */
 .convHistory {
   float: left;
   position: relative;
@@ -1005,7 +995,7 @@ div[class~="onTop"] {
   overflow-y: scroll;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* HIDE SCROLLBAR FOR CHROME, SAFARI AND OPERA */
 .convHistory::-webkit-scrollbar {
   display: none;
 }
@@ -1059,6 +1049,7 @@ div[class~="onTop"] {
   background: $bg_message_received;
   border-radius: 10px;
   clear: both;
+  font-weight: 600;
 
   &:nth-last-child(1) {
     margin-bottom: 10px;
@@ -1149,7 +1140,7 @@ div[class~="onTop"] {
   background: #b02e2e;
 }
 
-
+/* THE REPLY BAR SCSS */
 .replyBar {
   width: 100%;
   height: 70px;
@@ -1159,7 +1150,7 @@ div[class~="onTop"] {
   .attach {
     width: 70px;
     height: 70px;
-    color: $color_13;
+    color: $reply_bar_attach;
     background: $background-color;
     float: left;
 
@@ -1250,51 +1241,20 @@ div[class~="onTop"] {
 
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* HIDE SCROLLBAR FOR CHROME, SAFARI AND OPERA */
 .emojiList::-webkit-scrollbar {
   display: none;
 }
 
-.stickerList {
-  width: 100%;
-  height: 150px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  display: none;
 
-  .pick {
-    width: 80px;
-    height: 80px;
-    background: transparent;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 65%;
-    transition: all 0.15s ease-in-out;
-
-    &:hover {
-      background: $hover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 65%;
-    }
-  }
-}
-
-.DarkTheme {
-  background: #222;
-
-  .mainApp {
-    background: #222;
-  }
-}
-
+/* SOLVING RESPONSIVE DESIGN ISSUES */
 @media screen and (max-width: 1180px) {
   .config {
     width: 60%;
   }
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 700px) {
   .config {
     width: 90%;
   }

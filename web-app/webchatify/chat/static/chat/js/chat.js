@@ -67,13 +67,6 @@ function renderChatButton(chatRoom) {
 
     var textInfo = $('<div>').addClass('textInfo').appendTo(chatInfo);
     $('<p>').addClass('name').text(chatRoom.name).appendTo(textInfo);
-    $('<p>').addClass('message').text('Message...').appendTo(textInfo);
-
-    var status = $('<div>').addClass('status onTop').appendTo(chatButton);
-    $('<p>').addClass('date').text('00:02').appendTo(status);
-    $('<p>').addClass('count').text('10').appendTo(status);
-    $('<i>').addClass('material-icons read').text('done_all').appendTo(status);
-
     return chatButton;
 }
 
@@ -89,7 +82,7 @@ $(document).ready(function () {
     });
 
     /* make config menu show up */
-    $(".settings").click(function () {
+    $(".infoUser").click(function () {
         $(".config").animate({opacity: '1', right: '0px'}, SPEED);
         /* hide others */
         hideMenu(SPEED);

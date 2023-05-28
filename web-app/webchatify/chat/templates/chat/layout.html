@@ -5,6 +5,8 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+    <link rel="icon" href="{% static 'chat/favicon.ico' %}">
     {% load sass_tags %}
     <link href="{% sass_src 'chat/css/chat.scss' %}" rel="stylesheet" type="text/css"/>
     <meta charset="UTF-8">
@@ -48,15 +50,12 @@
 
             <div class="myinfo">
                 <p class="name">{{ user.username }}</p>
-                <p class="phone">+1 12 1234 5678</p>
             </div>
 
-            <button class="cloud">
-                <i class="material-icons">bookmark</i>
-            </button>
-
-            <button class="settings">
-                <i class="material-icons">settings</i>
+            <button class="infoUser">
+                 <i class="material-symbols-outlined">
+                    info
+                </i>
             </button>
 
         </div>
@@ -65,18 +64,6 @@
                 <i class="material-icons">&#xE8D3;</i>
 
                 <span>New Group</span>
-            </button>
-
-            <button class="cn">
-                <i class="material-icons">&#xE851;</i>
-
-                <span>Contacts</span>
-            </button>
-
-            <button class="cl">
-                <i class="material-icons">&#xE0B0;</i>
-
-                <span>Calls History</span>
             </button>
 
             <a href="{% url 'logout'%}">
@@ -94,12 +81,6 @@
 <!-- CONVERSATION OPTIONS MENU -->
 
 <div class="moreMenu">
-    <button class="option about">
-        <span class="material-symbols-outlined">
-            info
-        </span>
-        See Info
-    </button>
     <button class="option invite">
         <span class="material-symbols-outlined">
             link
@@ -116,14 +97,16 @@
 <section class="switchMobile">
     <p class="title">Mobile Device Detected</p>
     <p class="desc">Switch to the mobile app for a better performance.</p>
-    <a><button class="okay">OK</button></a>
+    <a>
+        <button class="okay">OK</button>
+    </a>
 </section>
 
 <!-- PROFILE OPTIONS OVERLAY -->
 <section class="config">
     <section class="configSect">
         <div class="profile">
-            <p class="confTitle">Settings</p>
+            <p class="confTitle">Information</p>
 
             <div class="image"></div>
 
@@ -131,9 +114,6 @@
                 <p class="name">{{ user.username }}</p>
                 <p class="pStatus">Online</p>
             </div>
-
-            <button class="changePic">Change Profile Picture</button>
-            <button class="edit">Edit Profile Info</button>
         </div>
     </section>
 
@@ -144,48 +124,8 @@
 
         <div class="information">
             <ul>
-                <li>Phone Number: <span class="blue phone">None</span></li>
                 <li>Username: <span class="blue username">@{{ user.username }}</span></li>
             </ul>
-        </div>
-
-        <!-- NOTIFICATIONS SECTION -->
-        <p class="confTitle">Notifications</p>
-
-        <div class="optionWrapper deskNotif">
-            <input type="checkbox" id="deskNotif" class="toggleTracer" checked>
-
-            <label class="check deskNotif" for="deskNotif">
-                <div class="tracer"></div>
-            </label>
-            <p>Enable Desktop Notifications</p>
-        </div>
-
-        <div class="optionWrapper showSName">
-            <input type="checkbox" id="showSName" class="toggleTracer">
-
-            <label class="check" for="showSName">
-                <div class="tracer"></div>
-            </label>
-            <p>Show Sender Name</p>
-        </div>
-
-        <div class="optionWrapper showPreview">
-            <input type="checkbox" id="showPreview" class="toggleTracer">
-
-            <label class="check" for="showPreview">
-                <div class="tracer"></div>
-            </label>
-            <p>Show Message Preview</p>
-        </div>
-
-        <div class="optionWrapper playSounds">
-            <input type="checkbox" id="playSounds" class="toggleTracer">
-
-            <label class="check" for="playSounds">
-                <div class="tracer"></div>
-            </label>
-            <p>Play Sounds</p>
         </div>
     </section>
 </section>
@@ -221,7 +161,7 @@
     <div class="link">
         <p>Invite link:</p>
         <input type="text" id="inviteLinkInput" readonly>
-        <span class="material-symbols-outlined copyLink" >
+        <span class="material-symbols-outlined copyLink">
             content_copy
         </span>
     </div>
