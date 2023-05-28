@@ -731,7 +731,7 @@ header {
   width: calc(100% - 85px);
   height: 40px;
   font-family: monospace, serif;
-  //background: #EEE;
+  color: $text_color;
   background: $hover;
   float: left;
   padding: 8px;

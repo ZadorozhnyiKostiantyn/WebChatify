@@ -46,8 +46,8 @@
 
         <div class="leftSide">
             <div class="image">
-                {% if chat_room.photo.url is not none %}
-                <img class="image" src="{{ room.get_image_path }}" alt="{{chat}}">
+                {% if room.photo.url is not none %}
+                <img class="image" src="{{ room.photo.url }}" alt="{{chat}}">
                 {% else %}
                 <img class="image" src="https://cdn-icons-png.flaticon.com/128/839/839627.png" alt="">
                 {% endif %}

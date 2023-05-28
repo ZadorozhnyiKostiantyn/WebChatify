@@ -50,6 +50,34 @@ function closeMoreMenu(e) {
     }
 }
 
+
+function renderChatButton(chatRoom) {
+    var chatButton = $('<div>').addClass('chatButton')
+        .attr('data-name', chatRoom.name)
+        .attr('data-id', chatRoom.id);
+
+    var chatInfo = $('<div>').addClass('chatInfo').appendTo(chatButton);
+
+    var image = $('<div>').addClass('image').appendTo(chatInfo);
+    if (chatRoom.photoUrl != null) {
+        $('<img>').attr('src', chatRoom.photoUrl).appendTo(image);
+    } else {
+        $('<img>').attr('src', 'https://cdn-icons-png.flaticon.com/128/839/839627.png').appendTo(image);
+    }
+
+    var textInfo = $('<div>').addClass('textInfo').appendTo(chatInfo);
+    $('<p>').addClass('name').text(chatRoom.name).appendTo(textInfo);
+    $('<p>').addClass('message').text('Message...').appendTo(textInfo);
+
+    var status = $('<div>').addClass('status onTop').appendTo(chatButton);
+    $('<p>').addClass('date').text('00:02').appendTo(status);
+    $('<p>').addClass('count').text('10').appendTo(status);
+    $('<i>').addClass('material-icons read').text('done_all').appendTo(status);
+
+    return chatButton;
+}
+
+
 $(document).ready(function () {
     const SPEED = 180;
     const HOST_URL = "http://127.0.0.1:8000";
@@ -146,7 +174,8 @@ $(document).ready(function () {
     });
 
 
-    $('.chatButton').click(function () {
+    $(document).on('click', '.chatButton', function () {
+        console.log('click to chat!')
         var selectedChat = $(this);
 
         selectedChat.addClass('active');
@@ -158,8 +187,8 @@ $(document).ready(function () {
     });
 
 
-    $(".chatButton").on("contextmenu", function (e) {
-        e.preventDefault(); // Відміна стандартного контекстного меню
+    $(document).on("contextmenu", '.chatButton', function (e) {
+        e.preventDefault();
         var chatButton = $(this);
         var offsetX = e.pageX - chatButton.offset().left;
         var offsetY = e.pageY - 40;
@@ -200,6 +229,30 @@ $(document).ready(function () {
         var inviteLink = $('#inviteLinkInput').val();
         copyToClipboard(inviteLink);
         closeAllOverlay()
+    });
+
+
+    $('.searchChats').on('input', function () {
+        var query = $('.searchChats').val();
+
+        $.ajax({
+            url: '/chat/search_chats/',
+            type: 'GET',
+            data: {query: query},
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            },
+            success: function (response) {
+                $('.chats').html('');
+                let results = response.results;
+
+                for (const [key, chatRoom] of Object.entries(results)) {
+                    var renderedChatButton = renderChatButton(chatRoom);
+                    $('.chats').append(renderedChatButton);
+                }
+            }
+        });
     });
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import ChatRoom
+from .models import ChatRoom, Profile
 
 
 class CreateNewGroupForm(forms.ModelForm):

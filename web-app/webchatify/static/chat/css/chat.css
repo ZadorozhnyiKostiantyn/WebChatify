@@ -552,6 +552,7 @@ header {
   width: calc(100% - 85px);
   height: 40px;
   font-family: monospace, serif;
+  color: #fff;
   background: #252525;
   float: left;
   padding: 8px;
