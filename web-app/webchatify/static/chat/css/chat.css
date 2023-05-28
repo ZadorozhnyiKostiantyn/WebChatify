@@ -797,16 +797,19 @@ div[class~="onTop"] > .count {
   position: relative;
   display: inline-block;
   width: fit-content;
+  max-width: 50%;
   height: auto;
   padding-left: 10px;
   padding-right: 50px;
   padding-top: 30px;
   padding-bottom: 30px;
   margin: 0px 15px;
-  margin-top: 20px;
+  margin-top: 10px;
   background: #2c2c2c;
   border-radius: 10px;
   clear: both; }
+  .msg:nth-last-child(1) {
+    margin-bottom: 10px; }
   .msg .timestamp {
     display: block;
     position: absolute;
@@ -821,6 +824,12 @@ div[class~="onTop"] > .count {
     top: 6px;
     color: #a6a6a6;
     user-select: none; }
+
+.msg:last-child .wrapper.messageSent {
+  margin-bottom: 10px; }
+
+.wrapper {
+  clear: both; }
 
 .messageReceived {
   float: left;
@@ -847,12 +856,11 @@ div[class~="onTop"] > .count {
 .userAction {
   padding: 2px 10px;
   display: flex;
-  align-items: center;
   position: relative;
   display: inline-block;
+  float: left;
   left: 50%;
   transform: translateX(-50%);
-  justify-content: center;
   height: 20px;
   font-size: 14px;
   width: fit-content;
@@ -869,9 +877,6 @@ div[class~="onTop"] > .count {
 .leave {
   color: #fff;
   background: #b02e2e; }
-
-.wrapper {
-  clear: both; }
 
 .replyBar {
   width: 100%;
@@ -933,11 +938,11 @@ div[class~="onTop"] > .count {
   width: 100%;
   height: 150px;
   overflow-x: hidden;
-  overflow-y: auto; }
+  overflow-y: scroll; }
   .emojiList .pick {
-    width: 50px;
+    width: 33px;
     height: 50px;
-    font-size: 30px;
+    font-size: 25px;
     background: transparent;
     background-repeat: no-repeat;
     background-position: center;
@@ -948,6 +953,10 @@ div[class~="onTop"] > .count {
       background-repeat: no-repeat;
       background-position: center;
       background-size: 70%; }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.emojiList::-webkit-scrollbar {
+  display: none; }
 
 .stickerList {
   width: 100%;
@@ -986,7 +995,7 @@ div[class~="onTop"] > .count {
   body {
     font-size: 14px; }
   .msg {
-    width: 90%; } }
+    max-width: 90%; } }
 
 @media screen and (max-width: 720px) {
   .leftPanel {
@@ -994,7 +1003,6 @@ div[class~="onTop"] > .count {
   .rightPanel {
     width: calc(100% - 81px); }
   .msg {
-    width: auto;
     max-width: 60%; }
   .profile .changePic {
     font-size: 14px;

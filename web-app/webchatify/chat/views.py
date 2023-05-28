@@ -50,7 +50,7 @@ class CreateGroupView(LoginRequiredMixin, View):
 
             message = Message.objects.create(
                 author=request.user,
-                message=f'{chat_room.name} was created',
+                message=f"'{chat_room.name}' was created",
                 chat_room=chat_room,
                 type="JOIN"
             )

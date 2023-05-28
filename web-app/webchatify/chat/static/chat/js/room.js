@@ -33,38 +33,41 @@ class Chat {
     }
 
     renderMessage(message) {
-        const wrapperDiv = $('<div>').addClass('wrapper');
+        //const wrapperDiv = $('<div>').addClass('wrapper');
         const msgDivTag = $('<div>').addClass('msg');
         const spanTimestampTag = $('<span>').addClass('timestamp').text(message.timestamp);
         const pTag = $('<p>').text(message.message);
 
         if (message.author === this.username) {
-            $(msgDivTag).addClass('messageSent');
+            msgDivTag.addClass('messageSent');
         } else {
             const spanUsernameTag = $('<span>')
                 .addClass('username')
                 .text(`@${message.author.toLowerCase()}`)
                 .css({color: message.color_session});
-            $(msgDivTag).addClass('messageReceived');
+            msgDivTag.addClass('messageReceived');
             msgDivTag.append(spanUsernameTag);
         }
 
         msgDivTag.append(pTag);
         msgDivTag.append(spanTimestampTag);
-        wrapperDiv.append(msgDivTag);
-        this.convHistory.append(wrapperDiv);
+        //wrapperDiv.append(msgDivTag);
+        //this.convHistory.append(wrapperDiv);
+        this.convHistory.append(msgDivTag);
     }
 
+
     renderActionUserMessage(message, actionClass) {
-        const wrapperDiv = $('<div>').addClass('wrapper');
+        //const wrapperDiv = $('<div>').addClass('wrapper');
         const msgDivTag = $('<div>')
             .addClass('msg')
             .addClass('userAction')
             .addClass(actionClass)
             .text(message.message);
 
-        wrapperDiv.append(msgDivTag);
-        this.convHistory.append(wrapperDiv);
+        //wrapperDiv.append(msgDivTag);
+        //this.convHistory.append(wrapperDiv);
+        this.convHistory.append(msgDivTag);
     }
 
     renderJoinMessage(message) {
@@ -135,6 +138,11 @@ class Chat {
             if (e.keyCode === 13) {  // enter, return
                 $('#chat-message-submit').click();
             }
+        });
+
+        $('.pick').click(function () {
+            console.log(`You choose: ${$(this).text()}`);
+            messageInputDom.val(messageInputDom.val() + $(this).text())
         });
 
         $('#chat-message-submit').on('click', (e) => {

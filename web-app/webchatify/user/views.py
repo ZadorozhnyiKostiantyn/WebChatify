@@ -34,13 +34,20 @@ class LoginPageView(View):
         if user is not None:
             login(request=request, user=user)
             profile = Profile.objects.get(user__id=request.user.id)
-            profile.color_session = "#" + ''.join([random.choice('0123456789ABCDEF') for j in range(6)])
+            profile.color_session = self.generate_light_color_hex()
             profile.save()
             return redirect('chat')
         else:
             messages.info(request=request, message='Username or password is incorrect')
 
         return render(request, self.template_name)
+
+    def generate_light_color_hex(self):
+        r = random.randint(140, 255)  # red
+        g = random.randint(140, 255)  # green
+        b = random.randint(140, 255)  # blue
+        return "#{:02x}{:02x}{:02x}".format(r, g, b)  # повертаємо кольоровий код у форматі #RRGGBB
+
 
 
 class LogoutView(View):
