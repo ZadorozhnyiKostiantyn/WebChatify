@@ -1,0 +1,171 @@
+{% extends 'chat/layout.html' %}
+
+{% block list_chat_rooms %}
+{% for chat_room in chat_rooms %}
+{% if chat_room.id == room.id %}
+<div class="chatButton active" data-name="{{ chat_room.name }}" data-id="{{ chat_room.id }}">
+    {% else %}
+    <div class="chatButton" data-name="{{ chat_room.name }}" data-id="{{ chat_room.id }}">
+        {% endif %}
+        <div class="chatInfo">
+            <div class="image">
+                {% if chat_room.photo.url is not none %}
+                <img src="{{ chat_room.photo.url }}" alt="">
+                {% else %}
+                <img src="https://cdn-icons-png.flaticon.com/128/839/839627.png" alt="">
+                {% endif %}
+            </div>
+            <div class="textInfo">
+                <p class="name">
+                    {{ chat_room.name }}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endblock %}
+
+    {% block room %}
+    <div class="topBar">
+        <div class="rightSide">
+            <button class="tbButton search">
+                <i class="material-icons">&#xE8B6;</i>
+            </button>
+            <button class="tbButton otherOptions">
+                <i class="material-icons">more_vert</i>
+            </button>
+        </div>
+
+        <div class="leftSide">
+            <div class="image">
+                {% if room.photo.url is not none %}
+                <img class="image" src="{{ room.photo.url }}" alt="{{chat}}">
+                {% else %}
+                <img class="image" src="https://cdn-icons-png.flaticon.com/128/839/839627.png" alt="">
+                {% endif %}
+
+            </div>
+            <div class="chatName">
+                <p>{{ room.name }}</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="convHistory userBg" id="chat-log">
+
+    </div>
+
+    <button class="scrollButton" id="scroll-down-button">
+        <span class="material-icons">keyboard_arrow_down</span>
+    </button>
+
+    <div class="replyBar">
+        <button class="attach">
+            <i class="material-icons d45">attach_file</i>
+        </button>
+
+        <input type="text" class="replyMessage" id="chat-message-input" placeholder="Type your message..." required/>
+
+        <div class="emojiBar">
+            <div class="emoticonType">
+                <button id="panelEmoji">Emoji</button>
+            </div>
+
+            <!-- Emoji panel -->
+            <div class="emojiList">
+                <!--first row-->
+                <button id="smileFace" class="pick">😀</button>
+                <button id="beamingFace" class="pick">😁</button>
+                <button id="laugingWithTears" class="pick">😂</button>
+                <button id="rofl" class="pick">🤣</button>
+                <button id="somFace" class="pick">😄</button>
+                <button id="swfFace" class="pick">😅</button>
+                <button id="grinningFace" class="pick">😆</button>
+                <button id="🙃" class="pick">🙃</button>
+
+                <!--second row-->
+                <button id="winkingFace" class="pick">😉</button>
+                <button id="smilingFaceWithSmilingEyes" class="pick">😊</button>
+                <button id="smilingFaceWithHalo" class="pick">😇</button>
+                <button id="smilingFaceWithSunglasses" class="pick">😎</button>
+                <button id="faceWithMonocle" class="pick">🧐</button>
+                <button id="partyingFace" class="pick">🥳</button>
+                <button id="smilingFaceWithHearts" class="pick">🥰</button>
+                <button id="smilingFaceWithHeartEyes" class="pick">😍</button>
+
+                <!--third row-->
+                <button id="star-struck" class="pick">🤩</button>
+                <button id="faceBlowingKiss" class="pick">😘</button>
+                <button id="winkingFaceWithTongue" class="pick">😜</button>
+                <button id="squintingFaceWithTongue" class="pick">😝</button>
+                <button id="moneyFaceWithMoneyTongue" class="pick">🤑</button>
+                <button id="hugs" class="pick">🤗</button>
+                <button id="thinkingFace" class="pick">🤔</button>
+                <button id="neutralFace" class="pick">😐</button>
+
+                <!--third row-->
+                <button id="expressionlessFace" class="pick">😑</button>
+                <button id="smirkingFace" class="pick">😏</button>
+                <button id="unamusedFace" class="pick">😒</button>
+                <button id="faceWithRollingEyes" class="pick">🙄</button>
+                <button id="grimacingFace" class="pick">😬</button>
+                <button id="faceWithThermometer" class="pick">🤒</button>
+                <button id="hotFace" class="pick">🥵</button>
+                <button id="slightlyFrowningFace" class="pick">🙁</button>
+
+                <!--fourh row-->
+                <button id="Begging face" class="pick">🥺</button>
+                <button id="Loudly crying face" class="pick">😭</button>
+                <button id="Downcast face with sweat" class="pick">😓</button>
+                <button id="Pouting face" class="pick">😡</button>
+                <button id="Pile of poo" class="pick">💩</button>
+                <button id="Sparking heart" class="pick">💖</button>
+                <button id="Hundred(correct)" class="pick">💯</button>
+                <button id="Sweat droplets" class="pick">💦</button>
+
+                <!--fifth row-->
+                <button id="Waving hand" class="pick">👋</button>
+                <button id="Raised hand" class="pick">✋</button>
+                <button id="ok" class="pick">👌</button>
+                <button id="Victory hand" class="pick">✌</button>
+                <button id="Call me hand" class="pick">🤙</button>
+                <button id="Index finger pointing right" class="pick">👉</button>
+                <button id="Index finger pointing left" class="pick">👈</button>
+                <button id="Thumbs up" class="pick">👍</button>
+
+                <!--sixth row-->
+                <button id="Thumbs down" class="pick">👎</button>
+                <button id="Clapping hands" class="pick">👏</button>
+                <button id="	Praying hands" class="pick">🙏</button>
+                <button id="Writing hands" class="pick">✍</button>
+                <button id="Nail polish" class="pick">💅</button>
+                <button id="Flexed biceps" class="pick">💪</button>
+                <button id="Eyes" class="pick">👀</button>
+                <button id="UkraineFlag" class="pick">🇺🇦</button>
+            </div>
+        </div>
+
+        <div class="otherTools">
+            <button class="toolButtons emoji">
+                <i class="material-symbols-outlined">add_reaction</i>
+            </button>
+
+            <button id="chat-message-submit" class="toolButtons send">
+                <i class="material-symbols-outlined">send</i>
+            </button>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block script %}
+    {% load static %}
+    <script type="module" src="{% static 'chat/js/settings.js' %}"></script>
+    <script type="module" src="{% static 'chat/js/websocket.js' %}"></script>
+    <script type="text/javascript">
+        var roomName = "{{ room.name }}";
+        var room_id = "{{ room.id }}"
+        var username = "{{ username }}";
+    </script>
+    <script type="module" src="{% static 'chat/js/room.js' %}"></script>
+    {% endblock %}
