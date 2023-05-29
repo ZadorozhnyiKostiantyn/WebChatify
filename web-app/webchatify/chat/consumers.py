@@ -10,6 +10,24 @@ from django.db.models import Value, CharField, ExpressionWrapper, DateTimeField,
 
 
 class ChatConsumer(WebsocketConsumer):
+    """
+    WebSocket consumer for handling chat-related WebSocket connections.
+
+    Methods:
+    - fetch_messages: Fetches and sends the chat messages for a given chat room.
+    - new_message: Handles a new chat message received from the client.
+    - join_message: Handles a join message when a user joins a chat room.
+    - leave_message: Handles a leave message when a user leaves a chat room.
+    - messages_to_json: Converts a list of messages to JSON format.
+    - message_to_json: Converts a single message to JSON format.
+    - connect: Handles the WebSocket connection event.
+    - disconnect: Handles the WebSocket disconnection event.
+    - receive: Handles a received message from the WebSocket.
+    - send_chat_message: Sends a chat message to the room group.
+    - send_message: Sends a message to the WebSocket client.
+    - chat_message: Receives a chat message from the room group and sends it to the WebSocket client.
+    - get_chat_history: Retrieves the chat message history for a given chat room.
+    """
     def fetch_messages(self, data):
         messages = self.get_chat_history(data['chatId'])
         content = {

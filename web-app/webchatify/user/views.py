@@ -21,11 +21,39 @@ class LoginPageView(View):
     template_name = 'user/login.html'
 
     def get(self, request):
+        """
+        Handles the GET request for the login page.
+
+        If the user is already authenticated, redirects to the chat page.
+        Otherwise, renders the login page template.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - If the user is already authenticated, a redirect response to the chat page.
+        - Otherwise, a rendered login page template.
+        """
         if request.user.is_authenticated:
             return redirect('chat')
         return render(request, self.template_name)
 
     def post(self, request):
+        """
+        Handles the POST request for the login page.
+
+        Authenticates the user based on the provided username and password.
+        If the user is authenticated, logs them in, generates a random color for the user's profile session,
+        and redirects to the chat page.
+        If the authentication fails, displays an error message.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - If the authentication is successful, a redirect response to the chat page.
+        - Otherwise, a rendered login page template with an error message.
+        """
         username = request.POST.get('username')
         password = request.POST.get('password')
 
@@ -43,15 +71,31 @@ class LoginPageView(View):
         return render(request, self.template_name)
 
     def generate_light_color_hex(self):
-        r = random.randint(120, 255)  # red
-        g = random.randint(120, 255)  # green
-        b = random.randint(120, 255)  # blue
-        return "#{:02x}{:02x}{:02x}".format(r, g, b)  # повертаємо кольоровий код у форматі #RRGGBB
+        """
+        Generates a random hexadecimal color code in a light color range.
 
+        Returns:
+        - A string representing a hexadecimal color code.
+        """
+        r = random.randint(120, 255)
+        g = random.randint(120, 255)
+        b = random.randint(120, 255)
+        return "#{:02x}{:02x}{:02x}".format(r, g, b)
 
 
 class LogoutView(View):
     def get(self, request):
+        """
+        Handles the GET request for logging out.
+
+        Logs out the user and redirects to the login page.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - A redirect response to the login page.
+        """
         logout(request)
         return redirect('login')
 
@@ -62,6 +106,18 @@ class RegisterView(FormView):
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
+        """
+        Handles the form submission for user registration.
+
+        Creates a new user based on the submitted form data, creates a profile for the user,
+        displays a success message, and redirects to the login page.
+
+        Parameters:
+        - form: The form instance containing the submitted data.
+
+        Returns:
+        - A redirect response to the login page.
+        """
         form.save()
         Profile.objects.create(
             user=User.objects.get(username=form.cleaned_data['username']),
@@ -72,6 +128,17 @@ class RegisterView(FormView):
 
 class ValidateUsernameView(View):
     def get(self, request):
+        """
+        Handles the GET request to validate a username.
+
+        Checks if the given username already exists and returns a JSON response indicating whether it is taken.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - A JSON response containing the 'is_taken' field indicating if the username is taken.
+        """
         username = request.GET.get('username', None)
         data = {'is_taken': User.objects.filter(username=username).exists()}
         return JsonResponse(data)

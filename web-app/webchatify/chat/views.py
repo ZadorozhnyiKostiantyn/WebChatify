@@ -12,11 +12,37 @@ from .models import ChatRoom, GroupMember, Message
 
 
 class ChatView(LoginRequiredMixin, View):
+    """
+    Handles the chat view.
+
+    Displays the chat page with the list of available chat rooms for the user.
+
+    Requires the user to be logged in.
+
+    Attributes:
+    - login_url (str): The URL to redirect to if the user is not logged in.
+    - template_name (str): The name of the template to render.
+    - form_class (class): The form class for creating a new group.
+
+    Methods:
+    - get: Handles the GET request for the chat page.
+    """
     login_url = 'login'
     template_name = 'chat/chat.html'
     form_class = CreateNewGroupForm
 
     def get(self, request):
+        """
+        Handles the GET request for the chat page.
+
+        Renders the chat page template with the list of chat rooms and the create new group form.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - A rendered chat page template.
+        """
         context = {
             'group': self.form_class(),
             'chat_rooms': self.get_all_chat_rooms_by_user(User.objects.get(id=request.user.id)),
@@ -25,15 +51,50 @@ class ChatView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def get_all_chat_rooms_by_user(self, user):
+        """
+        Retrieves all chat rooms associated with a user.
+
+        Parameters:
+        - user: The User object.
+
+        Returns:
+        - QuerySet: A queryset of ChatRoom objects.
+        """
         return ChatRoom.objects.filter(groupmember__user=user)
 
 
 class CreateGroupView(LoginRequiredMixin, View):
+    """
+    Handles the creation of a new group.
+
+    Requires the user to be logged in.
+
+    Attributes:
+    - login_url (str): The URL to redirect to if the user is not logged in.
+    - template_name (str): The name of the template to render.
+    - form_class (class): The form class for creating a new group.
+
+    Methods:
+    - get: Handles the GET request for creating a new group.
+    - post: Handles the POST request for creating a new group.
+    """
     login_url = 'login'
     template_name = 'chat/chat.html'
     form_class = CreateNewGroupForm
 
     def post(self, request):
+        """
+        Handles the POST request for creating a new group.
+
+        Creates a new group based on the submitted form data, adds the current user as a group member,
+        and redirects to the chat page.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - A redirect response to the chat page.
+        """
         group = self.form_class(request.POST, request.FILES)
         if group.is_valid():
             post = group.save(commit=False)
@@ -58,17 +119,41 @@ class CreateGroupView(LoginRequiredMixin, View):
 
         return render(request, self.template_name, {'group': group})
 
-    def get(self, request):
-        group = self.form_class()
-        return render(request, self.template_name, {'group': group})
-
 
 class RoomView(LoginRequiredMixin, View):
+    """
+    Handles the room view.
+
+    Displays the chat room page with the messages and group details.
+
+    Requires the user to be logged in.
+
+    Attributes:
+    - login_url (str): The URL to redirect to if the user is not logged in.
+    - template_name (str): The name of the template to render.
+    - form_class (class): The form class for creating a new group.
+
+    Methods:
+    - get: Handles the GET request for the chat room page.
+    """
+
     login_url = 'login'
     template_name = 'chat/room.html'
     form_class = CreateNewGroupForm
 
     def get(self, request, room_id):
+        """
+        Handles the GET request for the chat room page.
+
+        Renders the chat room page template with the chat room details and messages.
+
+        Parameters:
+        - request: The HTTP request object.
+        - room_id (int): The ID of the chat room.
+
+        Returns:
+        - A rendered chat room page template.
+        """
         try:
             chat_room = ChatRoom.objects.get(id=room_id)
             user = User.objects.get(id=request.user.id)
@@ -87,11 +172,37 @@ class RoomView(LoginRequiredMixin, View):
             return render(request, 'chat/404.html')
 
     def get_all_chat_rooms_by_user(self, user):
+        """
+        Retrieves all chat rooms associated with a user.
+
+        Parameters:
+        - user: The User object.
+
+        Returns:
+        - QuerySet: A queryset of ChatRoom objects.
+        """
         return ChatRoom.objects.filter(groupmember__user=user)
 
 
 class GetInviteLinkView(View):
+    """
+    Handles the retrieval of an invite link for a chat room.
+
+    Methods:
+    - get: Handles the GET request for retrieving the invite link.
+    """
     def get(self, request):
+        """
+        Handles the GET request for retrieving the invite link.
+
+        Retrieves the invite link for the specified chat room ID.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - A JSON response containing the invite link.
+        """
         chat_id = request.GET.get('chatId', None)
         data = {
             'link': ChatRoom.objects.get(id=chat_id).invite_link
@@ -100,9 +211,33 @@ class GetInviteLinkView(View):
 
 
 class JoinChatRoomView(LoginRequiredMixin, View):
-    login_url = 'login'
+    """
+    Handles joining a chat room.
 
+    Requires the user to be logged in.
+
+    Attributes:
+    - login_url (str): The URL to redirect to if the user is not logged in.
+
+    Methods:
+    - get: Handles the GET request for joining a chat room.
+    """
+
+    login_url = 'login'
     def get(self, request, invite_link):
+        """
+        Handles the GET request for joining a chat room.
+
+        Joins the specified chat room by adding the current user as a group member
+        and sends a join message to the chat room's channel.
+
+        Parameters:
+        - request: The HTTP request object.
+        - invite_link (str): The invite link of the chat room.
+
+        Returns:
+        - A redirect response to the chat room page.
+        """
         try:
             chat_room = ChatRoom.objects.get(invite_link=invite_link)
             user = User.objects.get(id=request.user.id)
@@ -130,9 +265,34 @@ class JoinChatRoomView(LoginRequiredMixin, View):
 
 
 class LeaveChatRoomView(LoginRequiredMixin, View):
+    """
+    Handles leaving a chat room.
+
+    Requires the user to be logged in.
+
+    Attributes:
+    - login_url (str): The URL to redirect to if the user is not logged in.
+
+    Methods:
+    - get: Handles the GET request for leaving a chat room.
+    """
     login_url = 'login'
 
     def get(self, request, room_id):
+        """
+        Handles the GET request for leaving a chat room.
+
+        Leaves the specified chat room by removing the current user as a group member,
+        sends a leave message to the chat room's channel, and deletes the chat room if no
+        other group members are present.
+
+        Parameters:
+        - request: The HTTP request object.
+        - room_id (int): The ID of the chat room.
+
+        Returns:
+        - A redirect response to the chat page.
+        """
         try:
             chat_room = ChatRoom.objects.get(id=room_id)
             user = User.objects.get(id=request.user.id)
@@ -168,7 +328,24 @@ class LeaveChatRoomView(LoginRequiredMixin, View):
 
 
 class SearchChatsView(View):
+    """
+    Handles the search for chat rooms.
+
+    Methods:
+    - get: Handles the GET request for searching chat rooms.
+    """
     def get(self, request):
+        """
+        Handles the GET request for searching chat rooms.
+
+        Searches for chat rooms based on the provided query parameter.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - A JSON response containing the search results.
+        """
         query = request.GET.get('query', '')
         if query is None:
             chats = ChatRoom.objects.filter(groupmember__user=user)
@@ -177,5 +354,3 @@ class SearchChatsView(View):
         chats = ChatRoom.objects.filter(name__icontains=query, groupmember__user_id=request.user.id)
         results = [{'name': chat.name, 'id': chat.id, 'photoUrl': chat.photo.url} for chat in chats]
         return JsonResponse({'results': results})
-
-

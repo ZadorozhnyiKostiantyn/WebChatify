@@ -33,7 +33,6 @@ class Chat {
     }
 
     renderMessage(message) {
-        //const wrapperDiv = $('<div>').addClass('wrapper');
         const msgDivTag = $('<div>').addClass('msg');
         const spanTimestampTag = $('<span>').addClass('timestamp').text(message.timestamp);
         const pTag = $('<p>').text(message.message);
@@ -51,22 +50,17 @@ class Chat {
 
         msgDivTag.append(pTag);
         msgDivTag.append(spanTimestampTag);
-        //wrapperDiv.append(msgDivTag);
-        //this.convHistory.append(wrapperDiv);
         this.convHistory.append(msgDivTag);
     }
 
 
     renderActionUserMessage(message, actionClass) {
-        //const wrapperDiv = $('<div>').addClass('wrapper');
         const msgDivTag = $('<div>')
             .addClass('msg')
             .addClass('userAction')
             .addClass(actionClass)
             .text(message.message);
 
-        //wrapperDiv.append(msgDivTag);
-        //this.convHistory.append(wrapperDiv);
         this.convHistory.append(msgDivTag);
     }
 
