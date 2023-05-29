@@ -135,8 +135,10 @@ class Chat {
         });
 
         $('.pick').click(function () {
-            console.log(`You choose: ${$(this).text()}`);
-            messageInputDom.val(messageInputDom.val() + $(this).text())
+            const caretPos = messageInputDom[0].selectionStart;
+            const text = messageInputDom.val();
+            const emoji = $(this).text();
+            messageInputDom.val(text.substring(0, caretPos) + emoji + text.substring(caretPos));
         });
 
         $('#chat-message-submit').on('click', (e) => {
